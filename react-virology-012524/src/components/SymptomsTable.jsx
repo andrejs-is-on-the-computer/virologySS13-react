@@ -1,54 +1,21 @@
 import React from 'react'
 import { SYMPTOMS } from '../assets/symptoms'
-// import Symptom from './Symptom'
+import Symptom from './Symptom'
 
-const table_headers = ["Symptom", "Stealth", "Resistance", "Stage Speed", "Transmission", "Level", "Required Chemical", "Effect", "Threshold"];
-
-const Symptom = ({symptom, stealth, resistance, stage_speed, transmission, level, required_chemical, threshold, id}) => {
-
-  // console.log(symptom);
-  return (
-    <>
-      <td>
-        {symptom}
-      </td>
-      <td>
-        {stealth}
-      </td>
-      <td>
-        {resistance}
-      </td>
-      <td>
-        {stage_speed}
-      </td>
-      <td>
-        {transmission}
-      </td>
-      <td>
-        {level}
-      </td>
-      <td>
-        {required_chemical}
-      </td>
-      <td>
-        {threshold}
-      </td>
-    </>
-  )
-}
+const table_headers = ["Symptom", "Stealth", "Resistance", "Stage Speed", "Transmission", "Level", "Effect", "Required Chemical", "Threshold"];
 
 const SymptomsTable = () => {
   return (
     <div>
-      <table className='table-auto'>
+      <table className='table-auto h-screen w-screen overflow-hidden'>
         <thead>
-          <tr>
-            {table_headers.map((header) => <th>{header}</th>)}
+          <tr className='font-bold text-white bg-slate-800'>
+            {table_headers.map((header, i) => <th key={i+"_header"}>{header}</th>)}
           </tr>
         </thead>
         <tbody>
           {SYMPTOMS.map((symptom) => (
-            <tr>
+            <tr className='even:bg-gray-50 odd:bg-white' key={symptom.id+"_symptom_row"}>
               {console.log(symptom)}
               <Symptom key={symptom.id} {...symptom} />
             </tr>))}
