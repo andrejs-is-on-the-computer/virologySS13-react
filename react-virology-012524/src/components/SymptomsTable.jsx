@@ -15,7 +15,9 @@ const SymptomsTable = () => {
         </thead>
         <tbody>
           {SYMPTOMS.map((symptom) => (
-            <tr className='even:bg-gray-50 odd:bg-white text-xs' key={symptom.id+"_symptom_row"}>
+            <tr className='text-xs even:bg-gray-50 odd:bg-white
+                          hover:bg-slate-900 hover:text-white duration-300' 
+                key={symptom.id+"_symptom_row"}>
               <Symptom key={symptom.id} {...symptom} />
             </tr>))}
         </tbody>
