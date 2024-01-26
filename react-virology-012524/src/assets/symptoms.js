@@ -490,6 +490,10 @@ function return_array() {
 var new_symps = [];
 var new_obj = [];
 
+// THIS FUNCTION IS DISGUSTING!!! 
+// !!! 4 FOR LOOPS !!!
+// !!! FIGURE THIS SHIT OUT !!!
+
 function return_symptoms() {
     var symptom_keys = return_array();
     symptom_keys.forEach(function (symptom){
@@ -506,6 +510,21 @@ function return_symptoms() {
         var t_key = '';
         var t_value = '';
         for(let i = 0; i < new_symps[j].length; i++){
+        
+        var chemical_names = new_symps[j][6][1].split(/<[^>]*>/g).filter((x) => x.length > 1);
+        var chemical_links = new_symps[j][6][1].split('"').filter((x) => x[0] === "/").map((x) => "https://tgstation13.org" + x);
+        var chemicals = [];
+        for (var k = 0; k < chemical_names.length; k++){
+          chemicals.push({"name" : chemical_names[k], "link" : chemical_links[k]});
+        }
+
+        var threshold_name = new_symps[j][8][1].split(/<[^>]*>/g).filter((x) => x.length > 2);
+        var threshold_title = new_symps[j][8][1].split('"').filter((x) => x[0].toUpperCase() !== x[0].toLowerCase());
+        var thresholds = [];
+        for (var l = 0; l < threshold_name.length; l++) {
+          thresholds.push({"name" : threshold_name[l], "title" : threshold_title[l]})
+        }
+
         t_key = new_symps[j][0][0];
         t_value = new_symps[j][0][1];
         temp = {symptom : new_symps[j][0][1],
@@ -514,9 +533,9 @@ function return_symptoms() {
                     stage_speed: new_symps[j][3][1],
                     transmission: new_symps[j][4][1],
                     level: new_symps[j][5][1],
-                    required_chemical: new_symps[j][6][1],
+                    required_chemical: chemicals,
                     effect: new_symps[j][7][1],
-                    threshold: new_symps[j][8][1],
+                    threshold: thresholds,
                     id: j};
         }
         new_obj.push(temp);

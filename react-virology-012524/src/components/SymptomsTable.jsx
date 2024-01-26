@@ -6,7 +6,7 @@ const table_headers = ["Symptom", "Stealth", "Resistance", "Stage Speed", "Trans
 
 const SymptomsTable = () => {
   return (
-    <div>
+    <div className='p-5'>
       <table className='table-auto h-screen w-screen overflow-hidden'>
         <thead>
           <tr className='font-bold text-white bg-slate-800'>
@@ -16,7 +16,6 @@ const SymptomsTable = () => {
         <tbody>
           {SYMPTOMS.map((symptom) => (
             <tr className='even:bg-gray-50 odd:bg-white' key={symptom.id+"_symptom_row"}>
-              {console.log(symptom)}
               <Symptom key={symptom.id} {...symptom} />
             </tr>))}
         </tbody>
