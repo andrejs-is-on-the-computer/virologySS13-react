@@ -4,7 +4,7 @@ import SymptomsTable from './components/SymptomsTable'
 function App() {
 
   return (
-    <div className='h-full w-full'>
+    <div>
       <SymptomsTable />
     </div>
   )

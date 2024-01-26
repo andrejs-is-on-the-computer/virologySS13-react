@@ -6,10 +6,10 @@ const table_headers = ["Symptom", "Stealth", "Resistance", "Stage Speed", "Trans
 
 const SymptomsTable = () => {
   return (
-    <div className='h-screen w-screen'>
-      <table className='table-auto overflow-hidden p-5 my-5 mx-8'>
+    <div className='w-screen block'>
+      <table className='box-border'>
         <thead>
-          <tr className='font-bold text-white bg-slate-800'>
+          <tr className='font-bold text-xs text-white bg-slate-800'>
             {table_headers.map((header, i) => <th key={i+"_header"}>{header}</th>)}
           </tr>
         </thead>

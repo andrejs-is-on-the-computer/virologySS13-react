@@ -2,53 +2,37 @@ import React from 'react'
 
 const Symptom = ({symptom, stealth, resistance, stage_speed, transmission, level, effect, required_chemical, threshold, id}) => {
 
-  // MOVE THESE TO SYMPTOMS.JS //
-  // var chemical_names = required_chemical.split(/<[^>]*>/g).filter((x) => x.length > 1);
-  // var chemical_links = required_chemical.split('"').filter((x) => x[0] === "/").map((x) => "https://tgstation13.org" + x);
-  // var chemicals = [];
-  // for (var i = 0; i < chemical_names.length; i++){
-  //   chemicals.push({"name" : chemical_names[i], "link" : chemical_links[i]});
-  // }
-
-  // var threshold_name = threshold.split(/<[^>]*>/g).filter((x) => x.length > 2);
-  // var threshold_title = threshold.split('"').filter((x) => x[0].toUpperCase() !== x[0].toLowerCase());
-  // var thresholds = [];
-  // for (var i = 0; i < threshold_name.length; i++) {
-  //   thresholds.push({"name" : threshold_name[i], "title" : threshold_title[i]})
-  // }
-  // -------------------------- //
-
   return (
     <>
-      <td>
+      <td className='p-2 font-bold'>
         {symptom}
       </td>
-      
-      <td>
+
+      <td className='p-2'>
         {stealth}
       </td>
 
-      <td>
+      <td className='p-2'>
         {resistance}
       </td>
 
-      <td>
+      <td className='p-2'>
         {stage_speed}
       </td>
 
-      <td>
+      <td className='p-2'>
         {transmission}
       </td>
 
-      <td>
+      <td className='p-2'>
         {level}
       </td>
 
-      <td>
+      <td className='p-2'>
         {effect}
       </td>
 
-      <td>
+      <td className='p-2'>
         {required_chemical.map((x, i) => (
           <ul>
             <li>
@@ -67,7 +51,7 @@ const Symptom = ({symptom, stealth, resistance, stage_speed, transmission, level
       <td className='truncate text-wrap'>
         {threshold.map((x, i) => (
           <ul>
-            <span  title={x.title} key={i+"_threshold_"+x.name}>
+            - <span  title={x.title} key={i+"_threshold_"+x.name}>
               {x.name}
             </span>
           </ul>
