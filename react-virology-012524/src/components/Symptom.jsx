@@ -8,23 +8,23 @@ const Symptom = ({symptom, stealth, resistance, stage_speed, transmission, level
         {symptom}
       </td>
 
-      <td className='p-2'>
+      <td className='p-2 min-w-[54px]'>
         {stealth}
       </td>
 
-      <td className='p-2'>
+      <td className='p-2 min-w-[54px]'>
         {resistance}
       </td>
 
-      <td className='p-2'>
+      <td className='p-2 min-w-[54px]'>
         {stage_speed}
       </td>
 
-      <td className='p-2'>
+      <td className='p-2 min-w-[54px]'>
         {transmission}
       </td>
 
-      <td className='p-2'>
+      <td className='p-2 min-w-[54px]'>
         {level}
       </td>
 
