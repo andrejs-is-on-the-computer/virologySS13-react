@@ -1,38 +1,38 @@
 import React from 'react'
 
 const Symptom = ({symptom, stealth, resistance, stage_speed, transmission, level, effect, required_chemical, threshold, id}) => {
-  var width = "100px";
+  var width = "10px";
   return (
     <>
-      <td className='p-2 font-bold'>
+      <td className='p-1 font-bold max-w-28 border-[1px] border-dotted border-gray-400'>
         {symptom}
       </td>
 
-      <td className={`p-2 w-[${width}] text-center`}>
+      <td className={`p-1 w-[${width}] text-center border-[1px] border-dotted border-gray-400`}>
         {stealth}
       </td>
 
-      <td className={`p-2 w-[${width}] text-center`}>
+      <td className={`p-1 w-[${width}] text-center border-[1px] border-dotted border-gray-400`}>
         {resistance}
       </td>
 
-      <td className={`p-2 w-[${width}] text-center`}>
+      <td className={`p-1 w-[${width}] text-center border-[1px] border-dotted border-gray-400`}>
         {stage_speed}
       </td>
 
-      <td className={`p-2 w-[${width}] text-center`}>
+      <td className={`p-1 w-[${width}] text-center border-[1px] border-dotted border-gray-400`}>
         {transmission}
       </td>
 
-      <td className={`p-2 w-[${width}] text-center`}>
+      <td className={`p-1 w-[${width}] text-center border-[1px] border-dotted border-gray-400`}>
         {level}
       </td>
 
-      <td className='p-2'>
+      <td className='p-1 border-[1px] border-dotted max-w-40 border-gray-400'>
         {effect}
       </td>
 
-      <td className='p-2'>
+      <td className='p-1 border-[1px] border-dotted border-gray-400'>
         {required_chemical.map((x, i) => (
           <ul>
             <li>
@@ -48,7 +48,7 @@ const Symptom = ({symptom, stealth, resistance, stage_speed, transmission, level
         ))}
       </td>
 
-      <td className='truncate text-wrap'>
+      <td className='truncate text-wrap border-[1px] border-dotted border-gray-400'>
         {threshold.map((x, i) => (
           <ul>
             -<span  title={x.title} key={i+"_threshold_"+x.name}>

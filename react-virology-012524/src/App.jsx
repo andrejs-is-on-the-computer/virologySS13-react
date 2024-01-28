@@ -1,11 +1,11 @@
 import './App.css'
-import SymptomsTable from './components/SymptomsTable'
+import SymptomsTables from './components/SymptomsTables'
 
 function App() {
 
   return (
     <div>
-      <SymptomsTable />
+      <SymptomsTables />
     </div>
   )
 }
