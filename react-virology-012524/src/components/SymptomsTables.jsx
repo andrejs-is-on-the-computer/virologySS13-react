@@ -9,14 +9,18 @@ const SymptomsTables = () => {
   const [isSelected, setSelected] = useState([]);
 
   function handleAddSymptom(symptom) {
-    console.log("Boop",symptom);
     // check if in selected array
-    isSelected.includes(symptom.id) 
+     
     // if found, REMOVE from 
-    ? isSelected.splice(isSelected.indexOf(symptom.id), 1)
-    // if not found, ADD to array
-    : isSelected.push(symptom.id);
-    console.log("Is Selected:", isSelected);
+    if (isSelected.includes(symptom.id)) {
+      isSelected.splice(isSelected.indexOf(symptom.id), 1); 
+      symptom.selected = false;
+    } else {
+      isSelected.push(symptom.id);
+      symptom.selected = true;
+    }
+    console.log(symptom);
+    console.log(symptom.selected);
   }
 
   return (
@@ -30,8 +34,8 @@ const SymptomsTables = () => {
           </thead>
           <tbody>
             {SYMPTOMS.map((symptom) => (
-              <tr className='text-xs even:bg-gray-50 odd:bg-white
-                            hover:bg-slate-900 hover:text-white duration-300' 
+              <tr className={`text-xs ${symptom.selected ? "bg-blue-300" : "even:bg-gray-50 odd:bg-white"}
+              hover:bg-slate-900 hover:text-white duration-300 `} 
                   key={symptom.id+"_symptom_row"}
                   onClick={() => handleAddSymptom(symptom)}
                   >

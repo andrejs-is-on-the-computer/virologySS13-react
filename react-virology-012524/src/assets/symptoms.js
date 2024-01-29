@@ -536,7 +536,8 @@ function return_symptoms() {
                     required_chemical: chemicals,
                     effect: new_symps[j][7][1],
                     threshold: thresholds,
-                    id: j};
+                    id: j,
+                    selected: false};
         }
         new_obj.push(temp);
     }
