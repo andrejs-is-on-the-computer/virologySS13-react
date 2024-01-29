@@ -14,12 +14,12 @@ const SymptomsTables = () => {
   }
 
   return (
-    <div className='relative overflow-x-auto'>
+    <div className='w-full relative overflow-x-auto'>
       <div className='w-full'>
 
         {/* SELECTED SYMPTOMS TABLE */}
 
-        <table className='sm:m-10 w-screen'>
+        <table className='sm:m-10'>
           <thead>
             <tr className='font-extralight text-xs text-white bg-slate-800'>
               {table_headers.map((header, i) => <th className='break-all' key={i+"_header"}>{header}</th>)}
