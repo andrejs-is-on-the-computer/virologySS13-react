@@ -17,28 +17,26 @@ const SymptomsTables = () => {
     <div className='min-height-full flex flex-col max-w-full'>
         
         {/* SELECTED SYMPTOMS TABLE */}
-        {/* <div className=''>
-          <table className='sm:m-10'>
-            <thead>
-              <tr className='font-extralight text-xs text-white bg-slate-800'>
-                {table_headers.map((header, i) => <th className='break-all' key={i+"_header"}>{header}</th>)}
-              </tr>
-            </thead>
-            <tbody>
-              {isSelected.map((symptom) => (
-                <tr className={`text-xs ${symptom.selected ? "bg-blue-300" : "even:bg-gray-50 odd:bg-white"}
-                hover:bg-slate-900 hover:text-white duration-300 `} 
-                    key={symptom.id+"_symptom_row"}
-                    onClick={() => {
-                      symptom.selected = false;
-                      setIsSelected(isSelected.filter(a => a.id !== symptom.id));}
-                    }
-                    >
-                  <SelectedSymptoms key={symptom.id} {...symptom} />
-                </tr>))}
-            </tbody>
-          </table>
-        </div> */}
+        <table className='sm:m-10 table-fixed '>
+          <thead>
+            <tr className='font-extralight text-xs text-white bg-slate-800'>
+              {table_headers.map((header, i) => <th className='break-all' key={i+"_header"}>{header}</th>)}
+            </tr>
+          </thead>
+          <tbody>
+            {isSelected.map((symptom) => (
+              <tr className={`text-xs ${symptom.selected ? "bg-blue-300" : "even:bg-gray-50 odd:bg-white"}
+              hover:bg-slate-900 hover:text-white duration-300 `} 
+                  key={symptom.id+"_symptom_row"}
+                  onClick={() => {
+                    symptom.selected = false;
+                    setIsSelected(isSelected.filter(a => a.id !== symptom.id));}
+                  }
+                  >
+                <SelectedSymptoms key={symptom.id} {...symptom} />
+              </tr>))}
+          </tbody>
+        </table>
 
         {/* ALL SYMPTOMS TABLE */}
         
