@@ -4,6 +4,7 @@ import Symptom from './Symptom'
 import SelectedSymptoms from './SelectedSymptoms';
 
 const table_headers = ["Symptom", "Stealth", "Resistance", "Stage Speed", "Transmission", "Level", "Effect", "Required Chemical", "Threshold"];
+// 0, 6, 7
 
 const SymptomsTables = () => {
 
@@ -17,7 +18,21 @@ const SymptomsTables = () => {
     <div className='min-height-full flex flex-col max-w-full'>
         
         {/* SELECTED SYMPTOMS TABLE */}
-        <table className='sm:m-10 table-fixed '>
+
+        <table className='sm:m-10 table-fixed text-xs'>
+          <thead>
+          <tr className='font-extralight text-xs text-white bg-slate-800 uppercase
+                         '>
+              {table_headers.map((header, i) => <th className='break-all' key={i+"_header"}>{header}</th>)}
+            </tr>
+          </thead>
+          <tbody>
+
+          </tbody>
+        </table>
+
+        {/* <table className='sm:m-10 table-fixed '>
+          
           <thead>
             <tr className='font-extralight text-xs text-white bg-slate-800'>
               {table_headers.map((header, i) => <th className='break-all' key={i+"_header"}>{header}</th>)}
@@ -36,13 +51,13 @@ const SymptomsTables = () => {
                 <SelectedSymptoms key={symptom.id} {...symptom} />
               </tr>))}
           </tbody>
-        </table>
+        </table> */}
 
         {/* ALL SYMPTOMS TABLE */}
         
           <table className='sm:m-10 table-fixed text-xs'>
             <thead>
-              <tr className='text-white bg-slate-800'>
+              <tr className='text-white bg-slate-800 uppercase'>
                 {table_headers.map((header, i) => <th className='w-40' key={i+"_header"}>{header}</th>)}
               </tr>
             </thead>
