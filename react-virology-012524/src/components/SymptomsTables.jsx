@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { SYMPTOMS } from '../assets/symptoms'
 import Symptom from './Symptom'
 import SelectedSymptoms from './SelectedSymptoms';
+import SummedScores from './SummedScores';
 
 const table_headers = ["Symptom", "Stealth", "Resistance", "Stage Speed", "Transmission", "Level", "Effect", "Required Chemical", "Threshold"];
 // 0, 6, 7
@@ -9,6 +10,14 @@ const table_headers = ["Symptom", "Stealth", "Resistance", "Stage Speed", "Trans
 const SymptomsTables = () => {
 
   const [isSelected, setIsSelected] = useState([]);
+  const [scores, setScores] = {
+    stlth: 0,
+    res: 0,
+    stsp: 0,
+    tran: 0,
+    lvl: 0,
+    thrsh: ""
+  };
 
   function handleClick(e) {
     this.setIsSelected
@@ -16,10 +25,15 @@ const SymptomsTables = () => {
 
   return (
     <div className='min-height-full flex flex-col max-w-full'>
+
+      {/* Summed Totals */}
+      <div className=''>
+        <SummedScores {...scores}  />
+      </div>
         
         {/* SELECTED SYMPTOMS TABLE */}
 
-        <table className='sm:m-10 table-fixed text-xs'>
+        {/* <table className='sm:m-10 table-fixed text-xs'>
           <thead>
           <tr className='font-extralight text-xs text-white bg-slate-800 uppercase
                          '>
@@ -29,7 +43,7 @@ const SymptomsTables = () => {
           <tbody>
 
           </tbody>
-        </table>
+        </table> */}
 
         {/* <table className='sm:m-10 table-fixed '>
           
