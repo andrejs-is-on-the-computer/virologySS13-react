@@ -5,96 +5,82 @@ import SelectedSymptoms from './SelectedSymptoms';
 import SummedScores from './SummedScores';
 
 const table_headers = ["Symptom", "Stealth", "Resistance", "Stage Speed", "Transmission", "Level", "Effect", "Required Chemical", "Threshold"];
-// 0, 6, 7
+const short_headers = ["STLTH", "RES", "STSP", "TRAN", "LEVEL", "THRSH"];
 
 const SymptomsTables = () => {
 
   const [isSelected, setIsSelected] = useState([]);
-  const [scores, setScores] = {
-    stlth: 0,
-    res: 0,
-    stsp: 0,
-    tran: 0,
-    lvl: 0,
-    thrsh: ""
-  };
+  const [scores, setScores] = useState({
+    stealth: 0,
+    resistance: 0,
+    stage_speed: 0,
+    transmission: 0,
+    level: 0,
+    threshold: []
+  });
 
-  function handleClick(e) {
-    this.setIsSelected
+  // Updates isSelected state, and adds or subtracts from the Scores state
+  function handleClick(symptom) {
+    if (symptom.selected) {
+      symptom.selected = false;
+      setIsSelected(isSelected.filter(a => a.id !== a.id));
+      setScores({
+        ...scores,
+        stealth: scores.stealth - symptom.stealth,
+        resistance: scores.resistance - symptom.resistance,
+        stage_speed: scores.stage_speed - symptom.stage_speed,
+        transmission: scores.transmission - symptom.transmission,
+        level: scores.level - symptom.level,
+        threshold: []
+      });
+    } else {
+      symptom.selected = true;
+      setIsSelected([...isSelected, symptom]);
+      setScores({
+        ...scores,
+        stealth: scores.stealth + symptom.stealth,
+        resistance: scores.resistance + symptom.resistance,
+        stage_speed: scores.stage_speed + symptom.stage_speed,
+        transmission: scores.transmission + symptom.transmission,
+        level: scores.level + symptom.level,
+        threshold: []
+      });
+    }
   }
 
   return (
-    <div className='min-height-full flex flex-col max-w-full'>
+    <div>
 
       {/* Summed Totals */}
-      <div className=''>
+      <div>
         <SummedScores {...scores}  />
       </div>
         
         {/* SELECTED SYMPTOMS TABLE */}
 
-        {/* <table className='sm:m-10 table-fixed text-xs'>
-          <thead>
-          <tr className='font-extralight text-xs text-white bg-slate-800 uppercase
-                         '>
-              {table_headers.map((header, i) => <th className='break-all' key={i+"_header"}>{header}</th>)}
-            </tr>
-          </thead>
-          <tbody>
-
-          </tbody>
-        </table> */}
-
-        {/* <table className='sm:m-10 table-fixed '>
-          
-          <thead>
-            <tr className='font-extralight text-xs text-white bg-slate-800'>
-              {table_headers.map((header, i) => <th className='break-all' key={i+"_header"}>{header}</th>)}
-            </tr>
-          </thead>
-          <tbody>
-            {isSelected.map((symptom) => (
-              <tr className={`text-xs ${symptom.selected ? "bg-blue-300" : "even:bg-gray-50 odd:bg-white"}
-              hover:bg-slate-900 hover:text-white duration-300 `} 
-                  key={symptom.id+"_symptom_row"}
-                  onClick={() => {
-                    symptom.selected = false;
-                    setIsSelected(isSelected.filter(a => a.id !== symptom.id));}
-                  }
-                  >
-                <SelectedSymptoms key={symptom.id} {...symptom} />
-              </tr>))}
-          </tbody>
-        </table> */}
+        {/* TODO */}
 
         {/* ALL SYMPTOMS TABLE */}
-        
-          <table className='sm:m-10 table-fixed text-xs'>
-            <thead>
-              <tr className='text-white bg-slate-800 uppercase'>
-                {table_headers.map((header, i) => <th className='w-40' key={i+"_header"}>{header}</th>)}
-              </tr>
-            </thead>
-            <tbody>
-              {SYMPTOMS.map((symptom) => (
-                <tr className={`${symptom.selected ? "bg-blue-300" : "even:bg-gray-50 odd:bg-white"}
-                hover:bg-slate-900 hover:text-white duration-300 `} 
-                    key={symptom.id+"_symptom_row"}
-                    onClick={() => {
-                      if (symptom.selected) {
-                        symptom.selected = false;
-                        setIsSelected(isSelected.filter(a => a.id !== a.id));
-                      } else {
-                        symptom.selected = true;
-                        setIsSelected([...isSelected, symptom]);
-                      }
-                    }}
-                    >
-                  <Symptom key={symptom.id} {...symptom} />
-                </tr>))}
-            </tbody>
-          </table>
-        
+
+          <div className='lg:p-4'>
+            <table className='w-full'>
+              <thead>
+                <tr className='text-white bg-slate-800 uppercase'>
+                  {table_headers.map((header, i) => <th key={i+"_header"}>{header}</th>)}
+                </tr>
+              </thead>
+              <tbody>
+                {SYMPTOMS.map((symptom) => (
+                  <tr className={`${symptom.selected ? "bg-blue-300" : "even:bg-gray-50 odd:bg-white"}
+                  hover:bg-slate-900 hover:text-white duration-300 `} 
+                      key={symptom.id+"_symptom_row"}
+                      onClick={() => handleClick(symptom)}
+                      >
+                    <Symptom key={symptom.id} {...symptom} />
+                  </tr>))}
+              </tbody>
+            </table>
+          </div>
 
     </div>
   )

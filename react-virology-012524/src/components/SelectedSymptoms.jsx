@@ -1,38 +1,37 @@
 import React from 'react'
 
 const SelectedSymptoms = ({symptom, stealth, resistance, stage_speed, transmission, level, effect, required_chemical, threshold, id}) => {
-  var width = "10px";
   return (
     <>
-      <td className='p-1 font-bold max-w-28 border-[1px] border-dotted border-gray-400'>
+      <td className='font-bold border-[1px] border-dotted border-gray-400'>
         {symptom}
       </td>
 
-      <td className={`p-1 w-[${width}] text-center border-[1px] border-dotted border-gray-400`}>
+      <td className={`text-center border-[1px] border-dotted border-gray-400`}>
         {stealth}
       </td>
 
-      <td className={`p-1 w-[${width}] text-center border-[1px] border-dotted border-gray-400`}>
+      <td className={`text-center border-[1px] border-dotted border-gray-400`}>
         {resistance}
       </td>
 
-      <td className={`p-1 w-[${width}] text-center border-[1px] border-dotted border-gray-400`}>
+      <td className={`text-center border-[1px] border-dotted border-gray-400`}>
         {stage_speed}
       </td>
 
-      <td className={`p-1 w-[${width}] text-center border-[1px] border-dotted border-gray-400`}>
+      <td className={`text-center border-[1px] border-dotted border-gray-400`}>
         {transmission}
       </td>
 
-      <td className={`p-1 w-[${width}] text-center border-[1px] border-dotted border-gray-400`}>
+      <td className={`text-center border-[1px] border-dotted border-gray-400`}>
         {level}
       </td>
 
-      <td className='p-1 border-[1px] border-dotted max-w-40 border-gray-400'>
+      <td className='border-[1px] border-dotted border-gray-400'>
         {effect}
       </td>
 
-      <td className='p-1 border-[1px] border-dotted border-gray-400'>
+      <td className='border-[1px] border-dotted border-gray-400'>
         {required_chemical.map((x, i) => (
           <ul>
             <li>

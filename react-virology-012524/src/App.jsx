@@ -4,7 +4,7 @@ import SymptomsTables from './components/SymptomsTables'
 function App() {
 
   return (
-    <div className='max-h-screen min-height-full flex flex-col max-w-full'>
+    <div className='h-full w-full'>
       <SymptomsTables />
     </div>
   )
