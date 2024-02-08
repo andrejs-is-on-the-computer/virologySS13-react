@@ -3,6 +3,7 @@ import { SYMPTOMS } from '../assets/symptoms'
 import Symptom from './Symptom'
 import SelectedSymptoms from './SelectedSymptoms';
 import SummedScores from './SummedScores';
+import ScoreChart from './ScoreChart';
 
 const table_headers = ["Symptom", "Stealth", "Resistance", "Stage Speed", "Transmission", "Level", "Effect", "Required Chemical", "Threshold"];
 const short_headers = ["STLTH", "RES", "STSP", "TRAN", "LEVEL", "THRSH"];
@@ -52,8 +53,13 @@ const SymptomsTables = () => {
     <div>
 
       {/* Summed Totals */}
-      <div>
-        <SummedScores {...scores}  />
+      <div className=''>
+        <SummedScores className="hidden" amount={isSelected.length} {...scores} />
+      </div>
+      
+      {/* Radar Chart */}
+      <div className='relative w-full h-[500px] p-10'>
+        <ScoreChart amount={isSelected.length} {...scores} />
       </div>
         
         {/* SELECTED SYMPTOMS TABLE */}
@@ -62,10 +68,10 @@ const SymptomsTables = () => {
 
         {/* ALL SYMPTOMS TABLE */}
 
-          <div className='lg:p-4'>
+          <div className='ml-[60px]'>
             <table className='w-full'>
               <thead>
-                <tr className='text-white bg-slate-800 uppercase'>
+                <tr className='text-white bg-slate-800 uppercase sticky top-0'>
                   {table_headers.map((header, i) => <th key={i+"_header"}>{header}</th>)}
                 </tr>
               </thead>
