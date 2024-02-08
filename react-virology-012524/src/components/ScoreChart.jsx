@@ -18,28 +18,23 @@ const ScoreChart = ({stealth, resistance, stage_speed, transmission, level, thre
   const data = [
     {
       symptom: "Stealth",
-      value: stealth,
-      fullMark: 20
+      Value: stealth
     },
     {
       symptom: "Resistance",
-      value: resistance,
-      fullMark: 20
+      Value: resistance
     },
     {
       symptom: "Stage Speed",
-      value: stage_speed,
-      fullMark: 20
+      Value: stage_speed
     },
     {
       symptom: "Transmission",
-      value: transmission,
-      fullMark: 20
+      Value: transmission
     },
     {
       symptom: "Level",
-      value: level,
-      fullMark: 20
+      Value: level
     },
   ];
 
@@ -56,13 +51,14 @@ const ScoreChart = ({stealth, resistance, stage_speed, transmission, level, thre
           bottom: 5,
         }}
       >
-        <CartesianGrid strokeDasharray="3 3" />
+        {console.log("Threshold: ", data)}
+        <CartesianGrid strokeDasharray="5 5" />
         <XAxis dataKey="symptom" />
         <YAxis />
         <Tooltip />
-        <Legend />
+        
+        <Bar dataKey="Value" fill="#27ae60" />
         <ReferenceLine y={0} stroke="#000" />
-        <Bar dataKey="value" fill="#8884d8" />
         {/* <Bar dataKey="uv" fill="#82ca9d" /> */}
       </BarChart>
     </ResponsiveContainer>
