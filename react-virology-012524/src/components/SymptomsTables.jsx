@@ -11,40 +11,51 @@ const short_headers = ["STLTH", "RES", "STSP", "TRAN", "LEVEL", "THRSH"];
 const SymptomsTables = () => {
 
   const [isSelected, setIsSelected] = useState([]);
+  const [isThresholds, setIsThresholds] = useState([]);
   const [scores, setScores] = useState({
     stealth: 0,
     resistance: 0,
     stage_speed: 0,
     transmission: 0,
-    level: 0,
-    threshold: []
+    level: 0
   });
 
   // Updates isSelected state, and adds or subtracts from the Scores state
   function handleClick(symptom) {
     if (symptom.selected) {
       symptom.selected = false;
+      // Removing from "isSelected"
       setIsSelected(isSelected.filter(a => a.id !== a.id));
+      // Removing from thresholds
+      setThresholds(isThresholds.filter(a => a.id !== a.id));
+      // Removing from scores
       setScores({
         ...scores,
         stealth: scores.stealth - symptom.stealth,
         resistance: scores.resistance - symptom.resistance,
         stage_speed: scores.stage_speed - symptom.stage_speed,
         transmission: scores.transmission - symptom.transmission,
-        level: scores.level - symptom.level,
-        threshold: []
+        level: scores.level - symptom.level
       });
     } else {
       symptom.selected = true;
+      // Adding to "isSelected"
       setIsSelected([...isSelected, symptom]);
+      // Add to thresholds
+      setIsThresholds([...isThresholds, {
+        threshold: symptom.threshold,
+        id: symptom.id
+      }]);
+      console.log("Thresholds");
+      console.log(isThresholds);
+      // Add to scores
       setScores({
         ...scores,
         stealth: scores.stealth + symptom.stealth,
         resistance: scores.resistance + symptom.resistance,
         stage_speed: scores.stage_speed + symptom.stage_speed,
         transmission: scores.transmission + symptom.transmission,
-        level: scores.level + symptom.level,
-        threshold: []
+        level: scores.level + symptom.level
       });
     }
   }
@@ -59,7 +70,7 @@ const SymptomsTables = () => {
       
       {/* Radar Chart */}
       <div className='relative w-full h-[500px] p-10'>
-        <ScoreChart amount={isSelected.length} {...scores} />
+        <ScoreChart amount={isSelected.length} {...scores} {...isThresholds} />
       </div>
         
         {/* SELECTED SYMPTOMS TABLE */}

@@ -51,7 +51,6 @@ const ScoreChart = ({stealth, resistance, stage_speed, transmission, level, thre
           bottom: 5,
         }}
       >
-        {console.log("Threshold: ", data)}
         <CartesianGrid strokeDasharray="5 5" />
         <XAxis dataKey="symptom" />
         <YAxis />
