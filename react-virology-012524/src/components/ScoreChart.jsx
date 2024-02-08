@@ -55,7 +55,7 @@ const ScoreChart = ({stealth, resistance, stage_speed, transmission, level, thre
         <XAxis dataKey="symptom" />
         <YAxis />
         <Tooltip />
-        
+        {/* HOW DO I GET THE FUCKIN VALUE?!? */}
         <Bar dataKey="Value" fill="#27ae60" />
         <ReferenceLine y={0} stroke="#000" />
         {/* <Bar dataKey="uv" fill="#82ca9d" /> */}
