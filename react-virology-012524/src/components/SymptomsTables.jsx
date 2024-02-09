@@ -26,8 +26,6 @@ const SymptomsTables = () => {
       symptom.selected = false;
       // Removing from "isSelected"
       setIsSelected(isSelected.filter(a => a.id !== a.id));
-      // Removing from thresholds
-      setThresholds(isThresholds.filter(a => a.id !== a.id));
       // Removing from scores
       setScores({
         ...scores,
@@ -41,13 +39,6 @@ const SymptomsTables = () => {
       symptom.selected = true;
       // Adding to "isSelected"
       setIsSelected([...isSelected, symptom]);
-      // Add to thresholds
-      setIsThresholds([...isThresholds, {
-        threshold: symptom.threshold,
-        id: symptom.id
-      }]);
-      console.log("Thresholds");
-      console.log(isThresholds);
       // Add to scores
       setScores({
         ...scores,
@@ -64,8 +55,8 @@ const SymptomsTables = () => {
     <div>
 
       {/* Summed Totals */}
-      <div className=''>
-        <SummedScores className="hidden" amount={isSelected.length} {...scores} />
+      <div>
+        <SummedScores amount={isSelected.length} {...scores} />
       </div>
       
       {/* Radar Chart */}

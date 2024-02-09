@@ -32,10 +32,10 @@ const ScoreChart = ({stealth, resistance, stage_speed, transmission, level, thre
       symptom: "Transmission",
       Value: transmission
     },
-    {
-      symptom: "Level",
-      Value: level
-    },
+    // {
+    //   symptom: "Level",
+    //   Value: level
+    // },
   ];
 
   return (
@@ -51,7 +51,7 @@ const ScoreChart = ({stealth, resistance, stage_speed, transmission, level, thre
           bottom: 5,
         }}
       >
-        <CartesianGrid strokeDasharray="5 5" />
+        <CartesianGrid strokeDasharray="1 1" />
         <XAxis dataKey="symptom" />
         <YAxis />
         <Tooltip />
