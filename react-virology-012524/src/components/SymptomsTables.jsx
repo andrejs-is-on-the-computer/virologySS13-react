@@ -33,7 +33,7 @@ const SymptomsTables = () => {
         resistance: scores.resistance - symptom.resistance,
         stage_speed: scores.stage_speed - symptom.stage_speed,
         transmission: scores.transmission - symptom.transmission,
-        level: scores.level - symptom.level
+        level: scores.level - symptom.level,
       });
     } else {
       symptom.selected = true;
@@ -61,7 +61,7 @@ const SymptomsTables = () => {
       
       {/* Radar Chart */}
       <div className='relative w-full h-[500px] p-10'>
-        <ScoreChart amount={isSelected.length} {...scores} {...isThresholds} />
+        <ScoreChart amount={isSelected.length} {...scores} selected={isSelected} />
       </div>
         
         {/* SELECTED SYMPTOMS TABLE */}

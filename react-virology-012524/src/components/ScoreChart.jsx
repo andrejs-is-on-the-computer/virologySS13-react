@@ -13,8 +13,19 @@ import {
 } from 'recharts';
 
 
-const ScoreChart = ({stealth, resistance, stage_speed, transmission, level, threshold, amount}) => {
+const ScoreChart = ({stealth, resistance, stage_speed, transmission, isSelected}) => {
+  // Stealth >= 2
+  // Transmission:
+  // <  3 : blood
+  // >= 3 : fluid
+  // >= 7 : skin contact
+  // >= 11: airborne
+  // coughing + sneezing
 
+  const thresholds = [
+    
+  ]
+  
   const data = [
     {
       symptom: "Stealth",

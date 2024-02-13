@@ -522,6 +522,10 @@ function return_symptoms() {
         var threshold_title = new_symps[j][8][1].split('"').filter((x) => x[0].toUpperCase() !== x[0].toLowerCase());
         var thresholds = [];
         for (var l = 0; l < threshold_name.length; l++) {
+          var name = threshold_name[l].substr(0, threshold_name[l].lastIndexOf(" "));
+          var value = parseInt(threshold_name[l].substr(-2));
+          console.log(name);
+          console.log(value);
           thresholds.push({"name" : threshold_name[l], "title" : threshold_title[l]})
         }
 
