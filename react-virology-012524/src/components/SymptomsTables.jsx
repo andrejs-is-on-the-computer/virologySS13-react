@@ -76,7 +76,7 @@ const SymptomsTables = () => {
         {/* ALL SYMPTOMS TABLE */}
 
           <div className=''>
-            <table className='w-full'>
+            <table className='w-full mb-[60px]'>
               <thead>
                 <tr className='text-white bg-slate-800 uppercase sticky top-0'>
                   {table_headers.map((header, i) => <th key={i+"_header"}>{header}</th>)}
