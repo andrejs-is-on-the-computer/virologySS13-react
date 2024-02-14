@@ -13,11 +13,11 @@ const SymptomsTables = () => {
   const [isSelected, setIsSelected] = useState([]);
   const [isThresholds, setIsThresholds] = useState([]);
   const [scores, setScores] = useState({
-    stealth: 0,
-    resistance: 0,
-    stage_speed: 0,
-    transmission: 0,
-    level: 0
+    stealth_s: 0,
+    resistance_s: 0,
+    stage_speed_s: 0,
+    transmission_s: 0,
+    level_s: 0
   });
 
   // Updates isSelected state, and adds or subtracts from the Scores state
@@ -26,15 +26,17 @@ const SymptomsTables = () => {
       symptom.selected = false;
       // Removing from "isSelected"
       setIsSelected(isSelected.filter(a => a.id !== a.id));
+      console.log("Removing", symptom.symptom);
       // Removing from scores
       setScores({
         ...scores,
-        stealth: scores.stealth - symptom.stealth,
-        resistance: scores.resistance - symptom.resistance,
-        stage_speed: scores.stage_speed - symptom.stage_speed,
-        transmission: scores.transmission - symptom.transmission,
-        level: scores.level - symptom.level,
+        stealth_s: scores.stealth_s - symptom.stealth,
+        resistance_s: scores.resistance_s - symptom.resistance,
+        stage_speed_s: scores.stage_speed_s - symptom.stage_speed,
+        transmission_s: scores.transmission_s - symptom.transmission,
+        level_s: scores.level - symptom.level,
       });
+      console.log("Removing", isSelected);
     } else {
       symptom.selected = true;
       // Adding to "isSelected"
@@ -42,25 +44,28 @@ const SymptomsTables = () => {
       // Add to scores
       setScores({
         ...scores,
-        stealth: scores.stealth + symptom.stealth,
-        resistance: scores.resistance + symptom.resistance,
-        stage_speed: scores.stage_speed + symptom.stage_speed,
-        transmission: scores.transmission + symptom.transmission,
-        level: scores.level + symptom.level
+        stealth_s: scores.stealth_s + symptom.stealth,
+        resistance_s: scores.resistance_s + symptom.resistance,
+        stage_speed_s: scores.stage_speed_s + symptom.stage_speed,
+        transmission_s: scores.transmission_s + symptom.transmission,
+        level_s: scores.level + symptom.level
       });
+      console.log("Adding", isSelected);
+      // Add thresholds
     }
   }
+  console.log('Selected', isSelected);
 
   return (
     <div>
 
       {/* Summed Totals */}
-      <div>
+      <div className='h-[100px] fixed bottom-0'>
         <SummedScores amount={isSelected.length} {...scores} />
       </div>
       
       {/* Radar Chart */}
-      <div className='relative w-full h-[500px] p-10'>
+      <div className='relative w-full h-[500px] py-10 pr-10'>
         <ScoreChart amount={isSelected.length} {...scores} selected={isSelected} />
       </div>
         
@@ -70,7 +75,7 @@ const SymptomsTables = () => {
 
         {/* ALL SYMPTOMS TABLE */}
 
-          <div className='ml-[60px]'>
+          <div className=''>
             <table className='w-full'>
               <thead>
                 <tr className='text-white bg-slate-800 uppercase sticky top-0'>

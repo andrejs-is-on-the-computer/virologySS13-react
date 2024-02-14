@@ -10,10 +10,12 @@ import {
   Legend,
   ReferenceLine,
   ResponsiveContainer,
+  Scatter,
+  ComposedChart
 } from 'recharts';
 
 
-const ScoreChart = ({stealth, resistance, stage_speed, transmission, isSelected}) => {
+const ScoreChart = ({stealth_s, resistance_s, stage_speed_s, transmission_s, selected}) => {
   // Stealth >= 2
   // Transmission:
   // <  3 : blood
@@ -21,37 +23,37 @@ const ScoreChart = ({stealth, resistance, stage_speed, transmission, isSelected}
   // >= 7 : skin contact
   // >= 11: airborne
   // coughing + sneezing
+  var threshes = selected.map((x) => {
+    if (x.threshold[0].name === "") {
+      console.log('EMPTY');
+    } else {
+      console.log("YEAAAH");
+    }
+  });
 
-  const thresholds = [
-    
-  ]
-  
   const data = [
     {
       symptom: "Stealth",
-      Value: stealth
+      Value: stealth_s,
+      threshold1: 4
     },
     {
       symptom: "Resistance",
-      Value: resistance
+      Value: resistance_s
     },
     {
       symptom: "Stage Speed",
-      Value: stage_speed
+      Value: stage_speed_s
     },
     {
       symptom: "Transmission",
-      Value: transmission
+      Value: transmission_s
     },
-    // {
-    //   symptom: "Level",
-    //   Value: level
-    // },
   ];
 
   return (
     <ResponsiveContainer width="100%" height="100%">
-      <BarChart
+      <ComposedChart
         width={1000}
         height={300}
         data={data}
@@ -69,8 +71,9 @@ const ScoreChart = ({stealth, resistance, stage_speed, transmission, isSelected}
         {/* HOW DO I GET THE FUCKIN VALUE?!? */}
         <Bar dataKey="Value" fill="#27ae60" />
         <ReferenceLine y={0} stroke="#000" />
+        <Scatter dataKey="threshold1" fill="red" />
         {/* <Bar dataKey="uv" fill="#82ca9d" /> */}
-      </BarChart>
+      </ComposedChart>
     </ResponsiveContainer>
   )
 }

@@ -1,54 +1,65 @@
 import React from 'react'
 
-const SummedScores = ({stealth, resistance, stage_speed, transmission, level, threshold, amount}) => {
+const SummedScores = ({stealth_s, resistance_s, stage_speed_s, transmission_s, level, threshold, amount}) => {
   
   const headers = ["STLTH", "RES", "STSP", "TRAN", "LEVEL", "THRSH"];
   return (
-    <div className='fixed w-[60px] h-full top-0 z-0 
+    <div className='fixed w-full h-[60px] bottom-0 z-0 
                   text-center bg-slate-500
                   border-r-[1px] border-gray-400
-                  flex flex-col justify-between'>
-
-          <div className='bg-slate-800 text-white font-bold'>
-            {headers[0]}
+                  flex justify-between'>
+          <div className='grow flex-col'>
+            <div className='bg-slate-800 text-white font-bold grow-0'>
+              {headers[0]}
+            </div>
+            <div className='bg-slate-300 h-[50px]'>
+              {stealth_s}
+            </div>
           </div>
-          <div className='bg-slate-300 grow'>
-            {stealth}
+          
+          <div className='grow'>
+            <div className='bg-slate-800 text-white font-bold'>
+              {headers[1]}
+            </div>
+            <div className='bg-slate-300 h-[50px]'>
+              {resistance_s}
+            </div>
           </div>
-
-          <div className='bg-slate-800 text-white font-bold'>
-            {headers[1]}
+          
+          <div className='grow'>
+            <div className='bg-slate-800 text-white font-bold'>
+              {headers[2]}
+            </div>
+            <div className='bg-slate-300 h-[50px]'>
+              {stage_speed_s}
+            </div>
           </div>
-          <div className='bg-slate-300 grow'>
-            {resistance}
+          
+          <div className='grow'>
+            <div className='bg-slate-800 text-white font-bold'>
+              {headers[3]}
+            </div>
+            <div className='bg-slate-300 h-[50px]'>
+              {transmission_s}
+            </div>
           </div>
-
-          <div className='bg-slate-800 text-white font-bold'>
-            {headers[2]}
+          
+          <div className='grow'>
+            <div className='bg-slate-800 text-white font-extrabold'>
+              {headers[4]}
+            </div>
+            <div className='bg-slate-300 h-[50px]'>
+              {level}
+            </div>
           </div>
-          <div className='bg-slate-300 grow'>
-            {stage_speed}
-          </div>
-
-          <div className='bg-slate-800 text-white font-bold'>
-            {headers[3]}
-          </div>
-          <div className='bg-slate-300 grow'>
-            {transmission}
-          </div>
-
-          <div className='bg-slate-800 text-white font-extrabold'>
-            {headers[4]}
-          </div>
-          <div className='bg-slate-300 grow'>
-            {level}
-          </div>
-
-          <div className='bg-slate-800 text-white font-bold'>
-            TOTAL
-          </div>
-          <div className='bg-slate-300 grow'>
-            {amount} / 6
+          
+          <div className='grow'>
+            <div className='bg-slate-800 text-white font-bold'>
+              TOTAL
+            </div>
+            <div className='bg-slate-300 h-[50px]'>
+              {amount} / 6
+            </div>
           </div>
     </div>
     // <div>

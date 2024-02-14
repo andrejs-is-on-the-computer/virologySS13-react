@@ -524,9 +524,7 @@ function return_symptoms() {
         for (var l = 0; l < threshold_name.length; l++) {
           var name = threshold_name[l].substr(0, threshold_name[l].lastIndexOf(" "));
           var value = parseInt(threshold_name[l].substr(-2));
-          console.log(name);
-          console.log(value);
-          thresholds.push({"name" : threshold_name[l], "title" : threshold_title[l]})
+          thresholds.push({"name" : name, "value": value, "title" : threshold_title[l]});
         }
 
         t_key = new_symps[j][0][0];

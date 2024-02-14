@@ -27,7 +27,7 @@ const Symptom = ({symptom, stealth, resistance, stage_speed, transmission, level
         {level}
       </td>
 
-      <td className='max-w-[300px] border-[1px] border-dotted border-gray-400'>
+      <td className='max-w-[300px] border-[1px] border-dotted border-gray-400 text-xs'>
         {effect}
       </td>
 
@@ -47,11 +47,11 @@ const Symptom = ({symptom, stealth, resistance, stage_speed, transmission, level
         ))}
       </td>
 
-      <td className='truncate border-[1px] border-dotted border-gray-400'>
+      <td className='truncate border-[1px] text-xs border-dotted border-gray-400'>
         {threshold.map((x, i) => (
           <ul>
             -<span  title={x.title} key={i+"_threshold_"+x.name}>
-              {x.name}
+              {x.name} {x.value}
             </span>
           </ul>
         ))}
