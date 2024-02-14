@@ -23,13 +23,6 @@ const ScoreChart = ({stealth_s, resistance_s, stage_speed_s, transmission_s, sel
   // >= 7 : skin contact
   // >= 11: airborne
   // coughing + sneezing
-  var threshes = selected.map((x) => {
-    if (x.threshold[0].name === "") {
-      console.log('EMPTY');
-    } else {
-      console.log("YEAAAH");
-    }
-  });
 
   const data = [
     {
@@ -50,6 +43,20 @@ const ScoreChart = ({stealth_s, resistance_s, stage_speed_s, transmission_s, sel
       Value: transmission_s
     },
   ];
+
+  selected.map((x) => {
+    if(x.threshold[0].name !== "") {
+      
+    }
+  });
+
+  var threshes = selected.map((x) => {
+    if (x.threshold[0].name === "") {
+      console.log('EMPTY');
+    } else {
+      console.log("YEAAAH");
+    }
+  });
 
   return (
     <ResponsiveContainer width="100%" height="100%">
