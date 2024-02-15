@@ -25,8 +25,7 @@ const SymptomsTables = () => {
     if (symptom.selected) {
       symptom.selected = false;
       // Removing from "isSelected"
-      setIsSelected(isSelected.filter(a => a.id !== a.id));
-      console.log("Removing", symptom.symptom);
+      setIsSelected(isSelected.filter(a => a.id !== symptom.id));
       // Removing from scores
       setScores({
         ...scores,
@@ -34,9 +33,10 @@ const SymptomsTables = () => {
         resistance_s: scores.resistance_s - symptom.resistance,
         stage_speed_s: scores.stage_speed_s - symptom.stage_speed,
         transmission_s: scores.transmission_s - symptom.transmission,
-        level_s: scores.level - symptom.level,
+        level_s: scores.level_s - symptom.level,
       });
-      console.log("Removing", isSelected);
+      // Remove from Thresholds
+      setIsThresholds(isThresholds.filter(a => a.id !== `${symptom.id}thresh`));
     } else {
       symptom.selected = true;
       // Adding to "isSelected"
@@ -50,11 +50,14 @@ const SymptomsTables = () => {
         transmission_s: scores.transmission_s + symptom.transmission,
         level_s: scores.level + symptom.level
       });
-      console.log("Adding", isSelected);
-      // Add thresholds
+      // Add to Thresholds
+      const updateThresholds = symptom.threshold.map((t) => {
+        return t;
+      });
+      updateThresholds.push(...isThresholds);
+      setIsThresholds(updateThresholds);
     }
   }
-  console.log('Selected', isSelected);
 
   return (
     <div>
@@ -66,7 +69,7 @@ const SymptomsTables = () => {
       
       {/* Radar Chart */}
       <div className='relative w-full h-[500px] py-10 pr-10'>
-        <ScoreChart amount={isSelected.length} {...scores} selected={isSelected} />
+        <ScoreChart amount={isSelected.length} {...scores} thresholds={isThresholds} />
       </div>
         
         {/* SELECTED SYMPTOMS TABLE */}
