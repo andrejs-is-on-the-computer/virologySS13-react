@@ -17,7 +17,7 @@ import {
 
 const ScoreChart = ({stealth_s, resistance_s, stage_speed_s, transmission_s, thresholds}) => {
 
-  console.log("Thresholds", thresholds);
+  // console.log("Thresholds", thresholds);
 
   const data = [
     {
@@ -39,22 +39,12 @@ const ScoreChart = ({stealth_s, resistance_s, stage_speed_s, transmission_s, thr
   ];
 
   return (
-    <div>
-      HELLO
-      {thresholds.name}
+    <div className='w-full h-full'>
+      THRESHES
+      {thresholds.map((t) => {
+        console.log(t.name);
+      })}
     </div>
-
-    // TESTING IF THIS FUCKIN THING IS RECEIVING THE UPDATED THRESHOLDS
-    // <div className='w-full h-full'>
-    //   {thresholds.map((t) => {
-    //     <div>
-    //       <span>{t.id}</span>
-    //       <span>{t.name}</span>
-    //       <span>{t.value}</span>
-    //       <span>{t.title}</span>
-    //     </div>
-    //   })}
-    // </div>
   )
 }
 
