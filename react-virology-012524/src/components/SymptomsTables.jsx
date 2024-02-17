@@ -63,12 +63,12 @@ const SymptomsTables = () => {
     <div>
 
       {/* Summed Totals */}
-      <div className='h-[100px] fixed bottom-0'>
+      <div className='h-[100px] fixed top-0 z-10'>
         <SummedScores amount={isSelected.length} {...scores} />
       </div>
       
       {/* Radar Chart */}
-      <div className='relative w-full h-[500px] py-10 pr-10'>
+      <div className='relative w-full h-[500px] pb-10 pr-10 mt-[100px]'>
         <ScoreChart amount={isSelected.length} {...scores} thresholds={isThresholds} />
       </div>
         
@@ -81,7 +81,7 @@ const SymptomsTables = () => {
           <div className=''>
             <table className='w-full mb-[60px]'>
               <thead>
-                <tr className='text-white bg-slate-800 uppercase sticky top-0'>
+                <tr className='text-white bg-slate-800 uppercase sticky top-[70px]'>
                   {table_headers.map((header, i) => <th key={i+"_header"}>{header}</th>)}
                 </tr>
               </thead>

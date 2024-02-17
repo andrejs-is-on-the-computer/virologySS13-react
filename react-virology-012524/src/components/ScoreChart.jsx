@@ -21,19 +21,19 @@ const ScoreChart = ({stealth_s, resistance_s, stage_speed_s, transmission_s, thr
 
   const data = [
     {
-      symptom: "Stealth",
+      stat: "Stealth",
       Value: stealth_s,
     },
     {
-      symptom: "Resistance",
+      stat: "Resistance",
       Value: resistance_s,
     },
     {
-      symptom: "Stage Speed",
+      stat: "Stage Speed",
       Value: stage_speed_s,
     },
     {
-      symptom: "Transmission",
+      stat: "Transmission",
       Value: transmission_s,
     },
   ];
@@ -63,6 +63,22 @@ const ScoreChart = ({stealth_s, resistance_s, stage_speed_s, transmission_s, thr
 
   console.log("We looked at the data...", data);
 
+
+  // Return
+  // 1. Stat name (Stealth, Transmission, etc.)
+  // 2. Current value of stat
+  // 3. Thresholds
+  //    3-1. Threshold Symptom
+  //    3-2. Threshold Value
+  //    3-3. Threshold Description
+  const CustomToolTip = ({label, payload}) => {
+    return (
+      <div>
+        <p>{payload}</p>
+      </div>
+    );
+  };
+
   return (
   <ResponsiveContainer width="100%" height="100%">
     <ComposedChart
@@ -79,22 +95,10 @@ const ScoreChart = ({stealth_s, resistance_s, stage_speed_s, transmission_s, thr
       <CartesianGrid strokeDasharray="1 1" />
       <XAxis dataKey="symptom" />
       <YAxis />
-      <Tooltip />
+      <Tooltip labelFormatter={() => {return data.stat;}} />
       <ReferenceLine y={0} stroke="#000" />
       <Bar dataKey="Value" fill="#82ca9d" />
       <Scatter dataKey="value0" fill="red" />
-      <Scatter dataKey="value1" fill="red" />
-      <Scatter dataKey="value2" fill="red" />
-      <Scatter dataKey="value3" fill="red" />
-      <Scatter dataKey="value3" fill="red" />
-      <Scatter dataKey="value3" fill="red" />
-      <Scatter dataKey="value3" fill="red" />
-      <Scatter dataKey="value3" fill="red" />
-      <Scatter dataKey="value3" fill="red" />
-      <Scatter dataKey="value3" fill="red" />
-      <Scatter dataKey="value3" fill="red" />
-      <Scatter dataKey="value3" fill="red" />
-      <Scatter dataKey="value3" fill="red" />
     </ComposedChart>
   </ResponsiveContainer>
   )
