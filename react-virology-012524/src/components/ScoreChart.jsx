@@ -61,22 +61,44 @@ const ScoreChart = ({stealth_s, resistance_s, stage_speed_s, transmission_s, thr
     }
   });
 
-  console.log("We looked at the data...", data);
-
 
   // Return
-  // 1. Stat name (Stealth, Transmission, etc.)
-  // 2. Current value of stat
-  // 3. Thresholds
-  //    3-1. Threshold Symptom
-  //    3-2. Threshold Value
-  //    3-3. Threshold Description
-  const CustomToolTip = ({label, payload}) => {
-    return (
-      <div>
-        <p>{payload}</p>
-      </div>
-    );
+  // 1. Stat name (Stealth, Transmission, etc.) %
+  // 2. Current value of stat %
+  // 3. Thresholds 
+  //    3-1. Threshold Symptom %
+  //    3-2. Threshold Value %
+  //    3-3. Threshold Description %
+  const getThreshes = (threshes) => {
+    let list = `<ul>`;
+    if (Object.keys(threshes).length > 2){
+      for (const [key, value] of Object.entries(threshes)){
+        list += `<li>${key}: ${value}</li>`;
+      }
+      return list += `</ul>`;
+    }
+    return `No thresholds for ${threshes.stat}`;
+  };
+
+  // console.log(thresholds);
+
+  const CustomToolTip = ({ active, payload}) => {
+    if (active && payload && payload.length) {
+      // console.log("Payload:",payload[0].payload);
+      return (
+        <div>
+          <p>Stat: {payload[0].payload.stat}</p>
+          <p>Value: {payload[0].payload.value}</p>
+          <b>Thresholds:</b>
+            {/* Checking and displaying thresholds */}
+            {
+              getThreshes(payload[0].payload)
+            }
+        </div>
+      );
+    }
+
+    return null;
   };
 
   return (
@@ -93,9 +115,9 @@ const ScoreChart = ({stealth_s, resistance_s, stage_speed_s, transmission_s, thr
       }}
     >
       <CartesianGrid strokeDasharray="1 1" />
-      <XAxis dataKey="symptom" />
+      <XAxis dataKey="stat" />
       <YAxis />
-      <Tooltip labelFormatter={() => {return data.stat;}} />
+      <Tooltip content={<CustomToolTip />} />
       <ReferenceLine y={0} stroke="#000" />
       <Bar dataKey="Value" fill="#82ca9d" />
       <Scatter dataKey="value0" fill="red" />
