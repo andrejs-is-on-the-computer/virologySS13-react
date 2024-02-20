@@ -48,7 +48,7 @@ const SymptomsTables = () => {
         resistance_s: scores.resistance_s + symptom.resistance,
         stage_speed_s: scores.stage_speed_s + symptom.stage_speed,
         transmission_s: scores.transmission_s + symptom.transmission,
-        level_s: scores.level + symptom.level
+        level_s: scores.level_s + symptom.level
       });
       // Add to Thresholds
       const updateThresholds = symptom.threshold.map((t) => {
@@ -69,7 +69,7 @@ const SymptomsTables = () => {
     <div>
 
       {/* Summed Totals */}
-      <div className='h-[100px] w-full fixed top-0 z-10'>
+      <div className='h-[100px] fixed top-0 z-10'>
         <SummedScores amount={isSelected.length} {...scores} />
       </div>
       
