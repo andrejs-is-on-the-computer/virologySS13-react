@@ -23,81 +23,80 @@ const ScoreChart = ({stealth_s, resistance_s, stage_speed_s, transmission_s, thr
     {
       stat: "Stealth",
       Value: stealth_s,
+      tresh: []
     },
     {
       stat: "Resistance",
       Value: resistance_s,
+      tresh: []
     },
     {
       stat: "Stage Speed",
       Value: stage_speed_s,
+      tresh: []
     },
     {
       stat: "Transmission",
       Value: transmission_s,
+      tresh: []
     },
   ];
 
   thresholds.map((t, i) => {
+    console.log('maaaappoping',t);
     switch(t.name) {
       case "Stealth":
-        data[0][`value${i}`] = t.value;
-        data[0][`title${i}`] = t.title;
+        data[0].tresh.push(t);
         break;
       case "Resistance":
-        data[1][`value${i}`] = t.value;
-        data[1][`title${i}`] = t.title;
+        data[0].tresh.push(t);
         break;
       case "Stage Speed":
-        data[2][`value${i}`] = t.value;
-        data[2][`title${i}`] = t.title;
+        data[0].tresh.push(t);
         break;
       case "Transmission":
-        data[3][`value${i}`] = t.value;
-        data[3][`title${i}`] = t.title;
+        data[0].tresh.push(t);
         break;
       default:
         break;
     }
   });
-
-
   // Return
   // 1. Stat name (Stealth, Transmission, etc.) %
   // 2. Current value of stat %
   // 3. Thresholds 
   //    3-1. Threshold Symptom %
   //    3-2. Threshold Value %
-  //    3-3. Threshold Description %
   const getThreshes = (threshes) => {
-    let list = `<ul>`;
-    if (Object.keys(threshes).length > 2){
-      for (const [key, value] of Object.entries(threshes)){
-        list += `<li>${key}: ${value}</li>`;
-      }
-      return list += `</ul>`;
+    console.log("Chart",threshes);
+    if (threshes.length > 0){
+      return threshes.map((t) => {
+        return <>
+          <li>
+            {t.stat}: {t.value}
+          </li>
+        </>
+      })
     }
     return `No thresholds for ${threshes.stat}`;
   };
 
-  // console.log(thresholds);
-
-  const CustomToolTip = ({ active, payload}) => {
+  const CustomToolTip = ({ active, payload }) => {
     if (active && payload && payload.length) {
-      // console.log("Payload:",payload[0].payload);
+      console.log("PAYLOAD", payload[0].payload);
       return (
         <div>
           <p>Stat: {payload[0].payload.stat}</p>
           <p>Value: {payload[0].payload.value}</p>
           <b>Thresholds:</b>
-            {/* Checking and displaying thresholds */}
+          <ul>
             {
-              getThreshes(payload[0].payload)
+              getThreshes(payload[0].payload.tresh)
             }
+          </ul>
         </div>
       );
     }
-
     return null;
   };
 
@@ -120,7 +119,7 @@ const ScoreChart = ({stealth_s, resistance_s, stage_speed_s, transmission_s, thr
       <Tooltip content={<CustomToolTip />} />
       <ReferenceLine y={0} stroke="#000" />
       <Bar dataKey="Value" fill="#82ca9d" />
-      <Scatter dataKey="value0" fill="red" />
+      {/* <Scatter dataKey="value0" fill="red" /> */}
     </ComposedChart>
   </ResponsiveContainer>
   )

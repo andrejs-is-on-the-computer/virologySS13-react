@@ -3,7 +3,7 @@ import React from 'react'
 const Symptom = ({symptom, stealth, resistance, stage_speed, transmission, level, effect, required_chemical, threshold, id}) => {
   return (
     <>
-      <td className='font-bold border-[1px] border-dotted border-gray-400'>
+      <td className='font-bold border-[1px] border-dotted border-gray-400 text-s'>
         {symptom}
       </td>
 
@@ -31,7 +31,7 @@ const Symptom = ({symptom, stealth, resistance, stage_speed, transmission, level
         {effect}
       </td>
 
-      <td className='border-[1px] border-dotted border-gray-400'>
+      <td className='border-[1px] border-dotted border-gray-400 text-xs'>
         {required_chemical.map((x, i) => (
           <ul>
             <li>
