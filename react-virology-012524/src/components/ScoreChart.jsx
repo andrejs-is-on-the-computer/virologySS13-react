@@ -41,40 +41,34 @@ const ScoreChart = ({stealth_s, resistance_s, stage_speed_s, transmission_s, thr
       case "Stealth":
         data[0][`${i}symp`] = t.stat;
         data[0][`${i}value`] = t.value;
-        data[0][`${i}title`] = t.title;
         break;
       case "Resistance":
         data[1][`${i}symp`] = t.stat;
         data[1][`${i}value`] = t.value;
-        data[1][`${i}title`] = t.title;
         break;
       case "Stage Speed":
         data[2][`${i}symp`] = t.stat;
         data[2][`${i}value`] = t.value;
-        data[2][`${i}title`] = t.title;
         break;
       case "Transmission":
         data[3][`${i}symp`] = t.stat;
         data[3][`${i}value`] = t.value;
-        data[3][`${i}title`] = t.title;
         break;
       default:
         break;
     }
   });
-  console.log(data);
-  // const getThreshes = (threshes) => {
-  //   if (threshes.length > 0){
-  //     return threshes.map((t) => {
-  //       return <>
-  //         <li>
-  //           {t.stat}: {t.value}
-  //         </li>
-  //       </>
-  //     })
-  //   }
-  //   return `No thresholds for ${threshes.stat}`;
-  // };
+  const getThreshes = (ts) => {
+    var transdob = Object.values(ts)
+    return transdob.slice(2).map((t, i, arr) => {
+      if (i % 2 === 0) {
+        return (<li>
+          {t}: {arr[i+1]}
+        </li>)
+      }
+      return null;
+    });
+  };
 
   const CustomToolTip = ({ active, payload }) => {
     if (active && payload && payload.length) {
@@ -84,9 +78,9 @@ const ScoreChart = ({stealth_s, resistance_s, stage_speed_s, transmission_s, thr
           <p><b>Value:</b> {payload[0].payload.value}</p>
           <b>Thresholds:</b>
           <ul>
-            {/* {
-              getThreshes(payload[0].payload.tresh)
-            } */}
+            {
+              getThreshes(payload[0].payload)
+            }
           </ul>
         </div>
       );
