@@ -55,7 +55,8 @@ const SymptomsTables = () => {
           stat: t.symptom,
           name: t.name,
           value: t.value,
-          title: t.title
+          title: t.title,
+          colour: t.colour
         };
       });
       updateThresholds.push(...isThresholds);
@@ -75,7 +76,7 @@ const SymptomsTables = () => {
               {table_headers.map((header, i) => <th className='text-white bg-slate-800 uppercase border-r-[1px] border-b-[1px] border-dotted border-gray-400' key={i+"_header"}>{header}</th>)}
             </tr>
           </thead>
-          <tbody className={`overflow-x-hidden transition-all duration-150 ${visible ? '' : 'h-0'}`}>
+          <tbody className={`overflow-x-hidden transition-all duration-150 ${visible ? '' : 'hidden'}`}>
               {isSelected.map((symptom) => (
                 <tr className="even:bg-gray-50 odd:bg-white
                 hover:bg-slate-900 hover:text-white duration-300"

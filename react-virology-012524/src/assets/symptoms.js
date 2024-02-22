@@ -524,7 +524,9 @@ function return_symptoms() {
         for (var l = 0; l < threshold_name.length; l++) {
           var name = threshold_name[l].substr(0, threshold_name[l].lastIndexOf(" "));
           var value = parseInt(threshold_name[l].substr(-2));
-          thresholds.push({"name" : name, "id" : `${j}thresh`, "value": value, "title" : threshold_title[l], "symptom" : new_symps[j][0][1]});
+          var randomColor = '#'+(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0');
+          thresholds.push({"name" : name, "id" : `${j}thresh`, "value": value, "title" : threshold_title[l], "symptom" : new_symps[j][0][1], "colour" : randomColor});
+          console.log("Color", randomColor);
         }
 
         t_key = new_symps[j][0][0];

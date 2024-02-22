@@ -41,32 +41,38 @@ const ScoreChart = ({stealth_s, resistance_s, stage_speed_s, transmission_s, thr
       case "Stealth":
         data[0][`${i}symp`] = t.stat;
         data[0][`${i}value`] = t.value;
+        data[0][`${i}colour`] = t.colour;
         break;
       case "Resistance":
         data[1][`${i}symp`] = t.stat;
         data[1][`${i}value`] = t.value;
+        data[1][`${i}colour`] = t.colour;
         break;
       case "Stage Speed":
         data[2][`${i}symp`] = t.stat;
         data[2][`${i}value`] = t.value;
+        data[2][`${i}colour`] = t.colour;
         break;
       case "Transmission":
         data[3][`${i}symp`] = t.stat;
         data[3][`${i}value`] = t.value;
+        data[3][`${i}colour`] = t.colour;
         break;
       default:
         break;
     }
   });
   const getThreshes = (ts) => {
-    var transdob = Object.values(ts)
+    var transdob = Object.values(ts);
+    console.log("Threshold", ts);
+    console.log("Keys",transdob);
     return transdob.slice(2).map((t, i, arr) => {
-      if (i % 2 === 0) {
-        return (<li>
-          {t}: {arr[i+1]}
-        </li>)
-      }
-      return null;
+      return i % 3 === 0 ? 
+      <li className={`text-[${arr[i+2]}]`}>
+      {t} - {arr[i+1]}
+    </li> 
+    : null;
+
     });
   };
 
@@ -109,27 +115,27 @@ const ScoreChart = ({stealth_s, resistance_s, stage_speed_s, transmission_s, thr
       <Bar dataKey="value" fill="#82ca9d" />
 
       {/* Bullshit */}
-      <Scatter dataKey="0value" fill="red" />
-      <Scatter dataKey="1value" fill="red" />
-      <Scatter dataKey="2value" fill="red" />
-      <Scatter dataKey="3value" fill="red" />
-      <Scatter dataKey="4value" fill="red" />
-      <Scatter dataKey="5value" fill="red" />
-      <Scatter dataKey="6value" fill="red" />
-      <Scatter dataKey="7value" fill="red" />
-      <Scatter dataKey="8value" fill="red" />
-      <Scatter dataKey="9value" fill="red" />
-      <Scatter dataKey="10value" fill="red" />
-      <Scatter dataKey="11value" fill="red" />
-      <Scatter dataKey="12value" fill="red" />
-      <Scatter dataKey="13value" fill="red" />
-      <Scatter dataKey="14value" fill="red" />
-      <Scatter dataKey="15value" fill="red" />
-      <Scatter dataKey="16value" fill="red" />
-      <Scatter dataKey="17value" fill="red" />
-      <Scatter dataKey="18value" fill="red" />
-      <Scatter dataKey="19value" fill="red" />
-      <Scatter dataKey="20value" fill="red" />
+      <Scatter dataKey="0value" fill="data.0colour" />
+      <Scatter dataKey="1value" fill="1colour" />
+      <Scatter dataKey="2value" fill="2colour" />
+      <Scatter dataKey="3value" fill="3colour" />
+      <Scatter dataKey="4value" fill="4colour" />
+      <Scatter dataKey="5value" fill="5colour" />
+      <Scatter dataKey="6value" fill="6colour" />
+      <Scatter dataKey="7value" fill="7colour" />
+      <Scatter dataKey="8value" fill="8colour" />
+      <Scatter dataKey="9value" fill="9colour" />
+      <Scatter dataKey="10value" fill="10colour" />
+      <Scatter dataKey="11value" fill="11colour" />
+      <Scatter dataKey="12value" fill="12colour" />
+      <Scatter dataKey="13value" fill="13colour" />
+      <Scatter dataKey="14value" fill="14colour" />
+      <Scatter dataKey="15value" fill="15colour" />
+      <Scatter dataKey="16value" fill="16colour" />
+      <Scatter dataKey="17value" fill="17colour" />
+      <Scatter dataKey="18value" fill="18colour" />
+      <Scatter dataKey="19value" fill="19colour" />
+      <Scatter dataKey="20value" fill="20colour" />
       {/* <Scatter dataKey="value0" fill="red" /> */}
     </ComposedChart>
   </ResponsiveContainer>
