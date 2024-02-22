@@ -4,7 +4,7 @@ const SummedScores = ({stealth_s, resistance_s, stage_speed_s, transmission_s, l
   
   const headers = ["STLTH", "RES", "STSP", "TRAN", "LEVEL", "THRSH"];
   return (
-    <div className='w-full fixed h-[60px] top-0 z-0 
+    <div className='w-full sticky h-[60px] z-0 
                   text-center flex justify-between'>
           <div className='grow flex-col'>
             <div className='bg-slate-800 text-white font-bold grow-0'>

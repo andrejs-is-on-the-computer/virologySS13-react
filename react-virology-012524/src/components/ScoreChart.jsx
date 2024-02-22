@@ -73,7 +73,7 @@ const ScoreChart = ({stealth_s, resistance_s, stage_speed_s, transmission_s, thr
   const CustomToolTip = ({ active, payload }) => {
     if (active && payload && payload.length) {
       return (
-        <div className='bg-white p-4'>
+        <div className='bg-slate-50 p-4 rounded-xl'>
           <p><b>{payload[0].payload.stat}</b></p>
           <p><b>Value:</b> {payload[0].payload.value}</p>
           <b>Thresholds:</b>

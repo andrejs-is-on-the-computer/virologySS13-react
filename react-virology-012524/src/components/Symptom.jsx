@@ -47,7 +47,7 @@ const Symptom = ({symptom, stealth, resistance, stage_speed, transmission, level
         ))}
       </td>
 
-      <td className='truncate border-[1px] text-xs border-dotted border-gray-400'>
+      <td className='text-xs border-dotted border-gray-400'>
         {threshold.map((x, i) => (
           <ul>
             -<span  title={x.title} key={i+"_threshold_"+x.name}>
