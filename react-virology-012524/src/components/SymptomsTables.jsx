@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { SYMPTOMS } from '../assets/symptoms'
 import Symptom from './Symptom'
 import SelectedSymptoms from './SelectedSymptoms';
@@ -7,6 +7,7 @@ import ScoreChart from './ScoreChart';
 
 const table_headers = ["Symptom", "Stealth", "Resistance", "Stage Speed", "Transmission", "Level", "Effect", "Required Chemical", "Threshold"];
 const short_headers = ["STLTH", "RES", "STSP", "TRAN", "LEVEL", "THRSH"];
+
 
 const SymptomsTables = () => {
 
@@ -20,6 +21,15 @@ const SymptomsTables = () => {
     transmission_s: 0,
     level_s: 0
   });
+  const [transmissionVector, setTransMissionVector] = useState('BLOOD');
+  //  <  3  - blood
+  //  >= 3  - fluid
+  //  >= 7  - skin contact
+  //  >= 11 - airborne
+  // To display the transmission vector 
+  function setTrans (score) {
+    return score >= 11 ? 'AIRBORNE' : score >= 7 ? 'SKIN CONTACT' : score >= 3 ? 'FLUID' : 'BLOOD';
+  }
 
  
   function handleClick(symptom) {
@@ -35,8 +45,7 @@ const SymptomsTables = () => {
         transmission_s: scores.transmission_s - symptom.transmission,
         level_s: scores.level_s - symptom.level,
       });
-      setIsThresholds(isThresholds.filter(a => a.id !== `${symptom.id}thresh`));
-      
+      setIsThresholds(isThresholds.filter(a => a.id !== `${symptom.id}thresh`)); 
     } else if (isSelected.length < 6) {
       // Adding Symptom //
       symptom.selected = true;
@@ -61,9 +70,13 @@ const SymptomsTables = () => {
       });
       updateThresholds.push(...isThresholds);
       setIsThresholds(updateThresholds);
-      // setCount(prevCount => prevCount.pop());
     }
   }
+
+  useEffect(() => {
+    let vector = scores.transmission_s > 10 ? 'AIRBORNE' : scores.transmission_s > 6 ? 'SKIN CONTACT' : scores.transmission_s > 2 ? 'FLUID' : 'BLOOD';
+    setTransMissionVector(vector);
+  });
 
   return (
     <div>
@@ -102,7 +115,7 @@ const SymptomsTables = () => {
               <td className='text-center'>{scores.transmission_s}</td>
               <td className='text-center'>{scores.level_s}</td>
 
-              <td>Transmission vector</td>
+              <td>{transmissionVector}</td>
               <td>Potential Cures</td>
               <td>---</td>
             </tr>
