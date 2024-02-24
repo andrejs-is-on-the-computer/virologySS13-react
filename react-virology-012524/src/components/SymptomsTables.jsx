@@ -22,15 +22,21 @@ const SymptomsTables = () => {
     level_s: 0
   });
   const [transmissionVector, setTransMissionVector] = useState('BLOOD');
-  //  <  3  - blood
-  //  >= 3  - fluid
-  //  >= 7  - skin contact
-  //  >= 11 - airborne
-  // To display the transmission vector 
-  function setTrans (score) {
-    return score >= 11 ? 'AIRBORNE' : score >= 7 ? 'SKIN CONTACT' : score >= 3 ? 'FLUID' : 'BLOOD';
-  }
 
+  function clearAll() {
+    isSelected.map((symptom) => {
+      symptom.selected = false;
+    });
+    setIsSelected([]);
+    setIsThresholds([]);
+    setScores({
+      stealth_s: 0,
+      resistance_s: 0,
+      stage_speed_s: 0,
+      transmission_s: 0,
+      level_s: 0
+    });
+  }
  
   function handleClick(symptom) {
     // Removing Symptom //
@@ -82,11 +88,11 @@ const SymptomsTables = () => {
     <div>
 
       {/* SELECTED SYMPTOMS TABLE */}
-      <div className='sticky top-0 z-10 w-full'>
+      <div className='sticky top-0 z-10 w-full max-h-screen'>
         <table className='w-full table-fixed'>
           <thead>
             <tr>
-              {table_headers.map((header, i) => <th className='text-white bg-slate-800 uppercase border-r-[1px] border-b-[1px] border-dotted border-gray-400' key={i+"_header"}>{header}</th>)}
+              {table_headers.map((header, i) => <th className='text-white bg-slate-800 uppercase border-r-[1px] border-b-[1px] border-dotted border-gray-400 text-sm' key={i+"_header"}>{header}</th>)}
             </tr>
           </thead>
           <tbody className={`overflow-x-hidden transition-all duration-150 ${visible ? '' : 'hidden'}`}>
@@ -105,7 +111,8 @@ const SymptomsTables = () => {
               ))}
           </tbody>
             {/* Totals */}
-          <tfoot>
+          <tfoot className='[&>*]:border-[1px] [&>*]:border-dotted [&>*]:border-gray-400 [&>*]:bg-slate-800
+                          [&>*]:uppercase [&>*]:text-white [&>*]:font-bold [&>*]:text-center'>
             <tr className='[&>*]:border-[1px] [&>*]:border-dotted [&>*]:border-gray-400 [&>*]:bg-slate-800
                           [&>*]:uppercase [&>*]:text-white [&>*]:font-bold [&>*]:text-center'>
               <td className=''>TOTAL</td>
@@ -115,19 +122,40 @@ const SymptomsTables = () => {
               <td className='text-center'>{scores.transmission_s}</td>
               <td className='text-center'>{scores.level_s}</td>
 
-              <td>{transmissionVector}</td>
-              <td>Potential Cures</td>
               <td>---</td>
+              <td>---</td>
+              <td>---</td>
+              {/* <td>{transmissionVector}</td>
+              <td>Potential Cures</td>
+              <td>---</td> */}
+            </tr>
+            <tr className='[&>*]:text-xs
+                          [&>*]:border-[1px] [&>*]:border-dotted [&>*]:border-gray-400 [&>*]:bg-slate-800
+                          [&>*]:uppercase [&>*]:text-white [&>*]:font-bold [&>*]:text-center'>
+              <td>{isSelected.length ? isSelected.length : 0} / 6</td>
+              <td>{scores.stealth_s >= 2 ? "HIDDEN" : "NOT HIDDEN"}</td>
+              <td>---</td>
+              <td>{scores.stage_speed_s < 2 ? "2%" : `${scores.stage_speed_s}%`}</td>
+              <td>{transmissionVector}</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td 
+                className='hover:bg-slate-600 duration-150 cursor-pointer'
+                onClick={() => clearAll()}
+              >
+                <div>CLEAR ALL</div>
+              </td>
             </tr>
           </tfoot>
         </table>
         {/* Show / Hide Selected table */}
           <div
             className='h-[25px] rounded-b-xl text-center cursor-pointer
-                    bg-blue-400 hover:bg-blue-600 duration-150'
+                    bg-blue-400 hover:bg-blue-600 duration-150 text-white font-bold'
             onClick={() => setVisible(visible => !visible)}
           >
-            {visible ? "Hide" : "Show"}
+            {visible ? "HIDE" : "SHOW"}
         </div>
       </div>
       
