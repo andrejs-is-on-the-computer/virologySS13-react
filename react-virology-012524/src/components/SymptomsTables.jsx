@@ -124,7 +124,13 @@ const SymptomsTables = () => {
 
               <td>---</td>
               <td>---</td>
-              <td>---</td>
+              <td
+                rowSpan={2} 
+                className='hover:bg-slate-600 duration-150 cursor-pointer'
+                onClick={() => clearAll()}
+              >
+                <div>CLEAR ALL</div>
+              </td>
               {/* <td>{transmissionVector}</td>
               <td>Potential Cures</td>
               <td>---</td> */}
@@ -140,12 +146,6 @@ const SymptomsTables = () => {
               <td></td>
               <td></td>
               <td></td>
-              <td 
-                className='hover:bg-slate-600 duration-150 cursor-pointer'
-                onClick={() => clearAll()}
-              >
-                <div>CLEAR ALL</div>
-              </td>
             </tr>
           </tfoot>
         </table>

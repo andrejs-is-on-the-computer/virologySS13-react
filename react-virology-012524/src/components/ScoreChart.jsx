@@ -11,7 +11,8 @@ import {
   ReferenceLine,
   ResponsiveContainer,
   Scatter,
-  ComposedChart
+  ComposedChart,
+  Customized
 } from 'recharts';
 
 
@@ -21,42 +22,41 @@ const ScoreChart = ({stealth_s, resistance_s, stage_speed_s, transmission_s, thr
     {
       stat: "Stealth",
       value: stealth_s,
+      threshes: []
     },
     {
       stat: "Resistance",
       value: resistance_s,
+      threshes: []
     },
     {
       stat: "Stage Speed",
       value: stage_speed_s,
+      threshes: []
     },
     {
       stat: "Transmission",
       value: transmission_s,
+      threshes: []
     },
   ];
 
   thresholds.map((t, i) => {
     switch(t.name) {
       case "Stealth":
-        data[0][`${i}symp`] = t.stat;
-        data[0][`${i}value`] = t.value;
-        data[0][`${i}colour`] = t.colour;
+        data[0]['threshes'].push(t.stat, t.value, t.colour);
         break;
       case "Resistance":
-        data[1][`${i}symp`] = t.stat;
-        data[1][`${i}value`] = t.value;
-        data[1][`${i}colour`] = t.colour;
+        data[1]['threshes'].push(t.stat, t.value, t.colour);
+        // data[1][`${i}symp`] = t.stat;
+        // data[1][`${i}value`] = t.value;
+        // data[1][`${i}colour`] = t.colour;
         break;
       case "Stage Speed":
-        data[2][`${i}symp`] = t.stat;
-        data[2][`${i}value`] = t.value;
-        data[2][`${i}colour`] = t.colour;
+        data[2]['threshes'].push(t.stat, t.value, t.colour);
         break;
       case "Transmission":
-        data[3][`${i}symp`] = t.stat;
-        data[3][`${i}value`] = t.value;
-        data[3][`${i}colour`] = t.colour;
+        data[3]['threshes'].push(t.stat, t.value, t.colour);
         break;
       default:
         break;
@@ -64,8 +64,8 @@ const ScoreChart = ({stealth_s, resistance_s, stage_speed_s, transmission_s, thr
   });
   const getThreshes = (ts) => {
     var transdob = Object.values(ts);
-    console.log("Threshold", ts);
-    console.log("Keys",transdob);
+    // console.log("Threshold", ts);
+    // console.log("Keys",transdob);
     return transdob.slice(2).map((t, i, arr) => {
       return i % 3 === 0 ? 
       <li className={`text-[${arr[i+2]}]`}>
@@ -94,7 +94,23 @@ const ScoreChart = ({stealth_s, resistance_s, stage_speed_s, transmission_s, thr
     return null;
   };
 
+  const CustomizedBar = (props) => {
+
+    return props.data.map((x) => {
+      console.log('MAP',x);
+      console.log('Value',x.value);
+      console.log('stat',x.stat);
+      return (
+        <Bar dataKey="value" />
+      )
+    })
+    // return (
+    //   <Bar dataKey={props.data.value} />
+    // )
+  }
+
   return (
+
   <ResponsiveContainer width="100%" height="100%">
     <ComposedChart
       width={1000}
@@ -112,9 +128,9 @@ const ScoreChart = ({stealth_s, resistance_s, stage_speed_s, transmission_s, thr
       <YAxis />
       <Tooltip content={<CustomToolTip />} />
       <ReferenceLine y={0} stroke="#000" />
-      <Bar dataKey="value" fill="#82ca9d" />
+      <Customized component={CustomizedBar} />
+      {/* <Bar dataKey="value" fill="#82ca9d" />
 
-      {/* Bullshit */}
       <Scatter dataKey="0value" fill="data.0colour" />
       <Scatter dataKey="1value" fill="1colour" />
       <Scatter dataKey="2value" fill="2colour" />
@@ -135,8 +151,7 @@ const ScoreChart = ({stealth_s, resistance_s, stage_speed_s, transmission_s, thr
       <Scatter dataKey="17value" fill="17colour" />
       <Scatter dataKey="18value" fill="18colour" />
       <Scatter dataKey="19value" fill="19colour" />
-      <Scatter dataKey="20value" fill="20colour" />
-      {/* <Scatter dataKey="value0" fill="red" /> */}
+      <Scatter dataKey="20value" fill="20colour" /> */}
     </ComposedChart>
   </ResponsiveContainer>
   )
