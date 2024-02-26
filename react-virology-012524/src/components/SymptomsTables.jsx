@@ -71,7 +71,7 @@ const SymptomsTables = () => {
           name: t.name,
           value: t.value,
           title: t.title,
-          colour: t.colour
+          fill: t.fill
         };
       });
       updateThresholds.push(...isThresholds);
