@@ -12,7 +12,8 @@ import {
   ResponsiveContainer,
   Scatter,
   ComposedChart,
-  Customized
+  Customized,
+  LabelList
 } from 'recharts';
 
 
@@ -66,20 +67,20 @@ const ScoreChart = ({stealth_s, resistance_s, stage_speed_s, transmission_s, thr
   const getThreshes = (ts) => {
     var transdob = Object.values(ts);
     console.log(transdob);
-    return transdob.slice(2).map((t, i, arr) => {
+    return transdob.length > 2 ? transdob.slice(2).map((t, i, arr) => {
       return i % 2 === 0 ? 
       <li>
-      {t} - {arr[i+1]}
+      <b>{t}</b> - {arr[i+1]}
     </li> 
     : null;
-    });
+    }) : <li><i>No thresholds</i></li>;
   };
 
   const CustomToolTip = ({ active, payload }) => {
     if (active && payload && payload.length) {
       return (
         <div className='p-4 rounded-xl bg-white border border-sky-500'>
-          <p><b>{payload[0].payload.stat}</b></p>
+          <p className='text-center'><b>{payload[0].payload.stat}</b></p>
           <p><b>Value:</b> {payload[0].payload.value}</p>
           <b>Thresholds:</b>
           <ul>
@@ -108,12 +109,20 @@ const ScoreChart = ({stealth_s, resistance_s, stage_speed_s, transmission_s, thr
       }}
     >
       <CartesianGrid strokeDasharray="1 1" />
-      <XAxis dataKey="stat" />
+      <XAxis dataKey="stat" style={{ fontWeight: 'bold' }} />
       <YAxis />
       <Tooltip content={<CustomToolTip />} />
       <ReferenceLine y={0} stroke="#000" />
 
-      <Bar dataKey="value" fill="blue" />
+      <Bar dataKey="value" fill="blue">
+        <LabelList dataKey="value" position="top" 
+                     
+                    style={{ 
+                      fontSize: '110%', 
+                      fill: '#005f06',
+                      fontWeight: 'bold',
+                    }} />
+      </Bar>
 
       <Scatter dataKey="0value" fill="red" />
       <Scatter dataKey="1value" fill="red" />
