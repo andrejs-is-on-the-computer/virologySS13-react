@@ -517,17 +517,23 @@ function return_symptoms() {
         for (var k = 0; k < chemical_names.length; k++){
           chemicals.push({"name" : chemical_names[k], "link" : chemical_links[k]});
         }
-
-        var threshold_name = new_symps[j][8][1].split(/<[^>]*>/g).filter((x) => x.length > 2);
-        var threshold_title = new_symps[j][8][1].split('"').filter((x) => x[0].toUpperCase() !== x[0].toLowerCase());
         var thresholds = [];
-        for (var l = 0; l < threshold_name.length; l++) {
-          var name = threshold_name[l].substr(0, threshold_name[l].lastIndexOf(" "));
-          var value = parseInt(threshold_name[l].substr(-2));
-          var randomColor = '#'+(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0');
-          thresholds.push({"name" : name, "id" : `${j}thresh`, "value": value, "title" : threshold_title[l], "symptom" : new_symps[j][0][1], "fill" : randomColor});
-          console.log("Color", randomColor);
+        console.log('thresholds', new_symps[j][8][1]);
+        if (new_symps[j][8][1] !== 'None') {
+          var threshold_name = new_symps[j][8][1].split(/<[^>]*>/g).filter((x) => x.length > 2);
+          var threshold_title = new_symps[j][8][1].split('"').filter((x) => x[0].toUpperCase() !== x[0].toLowerCase());
+
+          for (var l = 0; l < threshold_name.length; l++) {
+            var name = threshold_name[l].substr(0, threshold_name[l].lastIndexOf(" "));
+            var value = parseInt(threshold_name[l].substr(-2));
+            var randomColor = '#'+(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0');
+            thresholds.push({"name" : name, "id" : `${j}thresh`, "value": value, "title" : threshold_title[l], "symptom" : new_symps[j][0][1], "fill" : randomColor});
+          }
+        } else {
+          console.log("None mate");
+          thresholds.push({"name" : "None", "id" : "999", "value": false, 'title' : '---', 'symptom' : new_symps[j][0][1]});
         }
+        
 
         t_key = new_symps[j][0][0];
         t_value = new_symps[j][0][1];

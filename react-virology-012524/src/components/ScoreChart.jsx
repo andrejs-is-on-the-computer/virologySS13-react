@@ -69,7 +69,7 @@ const ScoreChart = ({stealth_s, resistance_s, stage_speed_s, transmission_s, thr
     return transdob.length > 2 ? transdob.slice(2).map((t, i, arr) => {
       return i % 2 === 0 ? 
       <li>
-      <b>{t}</b> - {arr[i+1]}
+      {`${t}: ${arr[i+1]}`}
     </li> 
     : null;
     }) : <li><i>No thresholds</i></li>;
