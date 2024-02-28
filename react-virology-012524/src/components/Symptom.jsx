@@ -32,9 +32,10 @@ const Symptom = ({symptom, stealth, resistance, stage_speed, transmission, level
       </td>
 
       <td className='border-[1px] border-dotted border-gray-400 text-xs'>
+        <ul>
         {required_chemical.map((x, i) => (
-          <ul>
-            <li>
+
+            <li key={i+"_chem_li_"+x.name}>
               -<a className='font-medium text-blue-600 underline dark:text-blue-500 hover:no-underline' 
               target="_blank" 
               href={x.link}
@@ -43,18 +44,20 @@ const Symptom = ({symptom, stealth, resistance, stage_speed, transmission, level
                 {x.name} 
               </a>
             </li>
-          </ul>
         ))}
+        </ul>
       </td>
 
       <td className='text-xs border-[1px] border-dotted border-gray-400'>
+        <ul>
         {threshold.map((x, i) => (
-          <ul>
+          <li key={i+"_thresh_list_"+x.name}>
             -<span  title={x.title} key={i+"_threshold_"+x.name}>
               {x.name} {x.value}
             </span>
-          </ul>
+          </li>
         ))}
+        </ul>
       </td>
     </>
   )

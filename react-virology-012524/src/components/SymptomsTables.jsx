@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react'
+
 import { SYMPTOMS } from '../assets/symptoms'
 import Symptom from './Symptom'
+
 import SelectedSymptoms from './SelectedSymptoms';
 import SummedScores from './SummedScores';
+
 import ScoreChart from './ScoreChart';
+
 
 const table_headers = ["Symptom", "Stealth", "Resistance", "Stage Speed", "Transmission", "Level", "Effect", "Required Chemical", "Threshold"];
 const short_headers = ["STLTH", "RES", "STSP", "TRAN", "LEVEL", "THRSH"];
@@ -103,12 +107,12 @@ const SymptomsTables = () => {
                     key={symptom.id+"_symptom_row"}
                     onClick={() => handleClick(symptom)}
                     >
-                  <Symptom key={symptom.id} {...symptom} />
+                  <Symptom key={`selected-${symptom.id}`} {...symptom} />
                 </tr>
               ))}
               {/* EMPTY ROWS */}
-              {[...Array(6 - isSelected.length)].map((empty) => (
-                <tr className='text-center [&>*]:border-[1px] [&>*]:border-dotted [&>*]:border-gray-400 even:bg-gray-50 odd:bg-white'><td>---</td><td>---</td><td>---</td><td>---</td><td>---</td><td>---</td><td>---</td><td>---</td><td>---</td></tr>
+              {[...Array(6 - isSelected.length)].map((empty, i) => (
+                <tr key={`empty-${i}`} className='text-center [&>*]:border-[1px] [&>*]:border-dotted [&>*]:border-gray-400 even:bg-gray-50 odd:bg-white'><td>---</td><td>---</td><td>---</td><td>---</td><td>---</td><td>---</td><td>---</td><td>---</td><td>---</td></tr>
               ))}
           </tbody>
             {/* Totals */}
@@ -181,7 +185,7 @@ const SymptomsTables = () => {
                   key={symptom.id+"_symptom_row"}
                   onClick={() => handleClick(symptom)}
                   >
-                <Symptom className="[&>*]:border-[1px] [&>*]:border-dotted [&>*]:border-gray-400" key={symptom.id} {...symptom} />
+                <Symptom className="[&>*]:border-[1px] [&>*]:border-dotted [&>*]:border-gray-400" key={`symp-${symptom.id}`} {...symptom} />
               </tr>))}
           </tbody>
         </table>

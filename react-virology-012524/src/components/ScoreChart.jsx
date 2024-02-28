@@ -106,7 +106,7 @@ const ScoreChart = ({stealth_s, resistance_s, stage_speed_s, transmission_s, thr
           fill="#fff"
           textAnchor='middle'
           dominantBaseline='middle'
-          font-weight="bold"
+          fontWeight="bold"
         >
           {value}
         </text>

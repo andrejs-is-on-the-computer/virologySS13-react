@@ -519,7 +519,6 @@ function return_symptoms() {
         }
         var thresholds = [];
         var rtThresholds = "<ul>";
-        console.log('thresholds', new_symps[j][8][1]);
         if (new_symps[j][8][1] !== 'None') {
           var threshold_name = new_symps[j][8][1].split(/<[^>]*>/g).filter((x) => x.length > 2);
           var threshold_title = new_symps[j][8][1].split('"').filter((x) => x[0].toUpperCase() !== x[0].toLowerCase());
@@ -532,7 +531,7 @@ function return_symptoms() {
             rtThresholds += '<li><span title="'+threshold_title[l]+ '"><span>'+ name + '</span></li>';
           }
         } else {
-          console.log("None mate");
+          
           thresholds.push({"name" : "None", "id" : "999", "value": false, 'title' : '---', 'symptom' : new_symps[j][0][1]});
         }
 
@@ -550,7 +549,7 @@ function return_symptoms() {
                     required_chemical: chemicals,
                     effect: new_symps[j][7][1],
                     threshold: thresholds,
-                    rtThreshold: rtThresholds,
+                    // rtThreshold: rtThresholds,
                     id: j,
                     selected: false};
         }
