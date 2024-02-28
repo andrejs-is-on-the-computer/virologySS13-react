@@ -4,9 +4,6 @@ import Symptom from './Symptom'
 import SelectedSymptoms from './SelectedSymptoms';
 import SummedScores from './SummedScores';
 import ScoreChart from './ScoreChart';
-import PrimeTable from './PrimeTable';
-import { DataTable } from 'primereact/datatable';
-import { Column } from 'primereact/column';
 
 const table_headers = ["Symptom", "Stealth", "Resistance", "Stage Speed", "Transmission", "Level", "Effect", "Required Chemical", "Threshold"];
 const short_headers = ["STLTH", "RES", "STSP", "TRAN", "LEVEL", "THRSH"];
@@ -170,23 +167,7 @@ const SymptomsTables = () => {
 
         {/* ALL SYMPTOMS TABLE */}
 
-      <div>
-        <DataTable value={allSymptoms} sortMode="multiple" tableStyle={{}}>
-              <Column field='symptom' header='Symptom' sortable style={{}}></Column>
-              <Column field='stealth' header='Stealth' sortable style={{}}></Column>
-              <Column field='resistance' header='Resistance' sortable style={{}}></Column>
-              <Column field='stage_speed' header='Stage Speed' sortable style={{}}></Column>
-              <Column field='transmission' header='Transmission' sortable style={{}}></Column>
-              <Column field='level' header='Level' sortable style={{}}></Column>
-              
-              <Column field='effect' header='Effect' sortable style={{}}></Column>
-              
-              <Column v-for="col of threshold" field="col.name"></Column>
-              {/* <Column v-for="col of attr2" :field="col.name" :key="col.name"> */}
-        </DataTable>
-      </div>
-
-      {/* <div className=''>
+      <div className=''>
         <table className='w-full mb-[60px] table-fixed [&>*]:border-[1px] [&>*]:border-dotted [&>*]:border-gray-400'>
           <thead>
             <tr className='text-white bg-slate-800 uppercase'>
@@ -204,7 +185,7 @@ const SymptomsTables = () => {
               </tr>))}
           </tbody>
         </table>
-      </div> */}
+      </div>
 
     </div>
   )
