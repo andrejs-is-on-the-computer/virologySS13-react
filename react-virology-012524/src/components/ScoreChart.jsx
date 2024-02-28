@@ -66,7 +66,6 @@ const ScoreChart = ({stealth_s, resistance_s, stage_speed_s, transmission_s, thr
   });
   const getThreshes = (ts) => {
     var transdob = Object.values(ts);
-    console.log(transdob);
     return transdob.length > 2 ? transdob.slice(2).map((t, i, arr) => {
       return i % 2 === 0 ? 
       <li>
@@ -94,12 +93,33 @@ const ScoreChart = ({stealth_s, resistance_s, stage_speed_s, transmission_s, thr
     return null;
   };
 
+  const renderCuztomizedLabel = ( props ) => {
+    const { x, y, width, value } = props;
+    const radius = 15;
+
+    return (
+      <g>
+        <circle cx={x + width / 2} cy={value > 1 ? y + radius : y - radius} r={radius} fill="blue" />
+        <text
+          x={x + width / 2}
+          y={value > 1 ? y + radius : y - radius}
+          fill="#fff"
+          textAnchor='middle'
+          dominantBaseline='middle'
+          font-weight="bold"
+        >
+          {value}
+        </text>
+      </g>
+    )
+  }
+
   return (
 
   <ResponsiveContainer width="100%" height="100%">
     <ComposedChart
       width={1000}
-      height={300}
+      height={200}
       data={data}
       margin={{
         top: 5,
@@ -110,18 +130,13 @@ const ScoreChart = ({stealth_s, resistance_s, stage_speed_s, transmission_s, thr
     >
       <CartesianGrid strokeDasharray="1 1" />
       <XAxis dataKey="stat" style={{ fontWeight: 'bold' }} />
+      <XAxis dataKey="value" />
       <YAxis />
       <Tooltip content={<CustomToolTip />} />
       <ReferenceLine y={0} stroke="#000" />
 
       <Bar dataKey="value" fill="blue">
-        <LabelList dataKey="value" position="top" 
-                     
-                    style={{ 
-                      fontSize: '110%', 
-                      fill: '#005f06',
-                      fontWeight: 'bold',
-                    }} />
+        <LabelList dataKey="value" content={renderCuztomizedLabel} />
       </Bar>
 
       <Scatter dataKey="0value" fill="red" />
