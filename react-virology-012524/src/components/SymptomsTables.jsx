@@ -8,9 +8,62 @@ import SummedScores from './SummedScores';
 
 import ScoreChart from './ScoreChart';
 
+import { DataGrid } from '@mui/x-data-grid';
+
 
 const table_headers = ["Symptom", "Stealth", "Resistance", "Stage Speed", "Transmission", "Level", "Effect", "Required Chemical", "Threshold"];
 const short_headers = ["STLTH", "RES", "STSP", "TRAN", "LEVEL", "THRSH"];
+
+const columns = [
+  {
+    headerName: "Symptom",
+    field: "symptom",
+    flex: 1
+  },
+  {
+    headerName: "Stealth",
+    field: "stealth",
+    flex: 0.25
+  },
+  {
+    headerName: "Resistance",
+    field: "resistance",
+    flex: 0.25
+  },
+  {
+    headerName: "Stage Speed",
+    field: "stage_speed",
+    flex: 0.25
+  },
+  {
+    headerName: "Transmission",
+    field: "transmission",
+    flex: 0.25
+  },
+  {
+    headerName: "Level",
+    field: "level",
+    flex: 0.25
+  },
+  {
+    headerName: "Effect",
+    field: "effect",
+    sortable: false,
+    flex: 1
+  },
+  {
+    headerName: "Required Chemical",
+    field: "required_chemical",
+    sortable: false,
+    flex: 1
+  },
+  {
+    headerName: "Threshold",
+    field: "threshold",
+    sortable: false,
+    flex: 1
+  }
+];
 
 
 const SymptomsTables = () => {
@@ -171,7 +224,16 @@ const SymptomsTables = () => {
 
         {/* ALL SYMPTOMS TABLE */}
 
-      <div className=''>
+      <div>
+        <DataGrid 
+          rows={allSymptoms}
+          columns={columns}
+          checkboxSelection
+          hideFooter
+          onRowSelectionModelChange={item => console.log('selecting', item)}
+        />
+      </div>
+      {/* <div className=''>
         <table className='w-full mb-[60px] table-fixed [&>*]:border-[1px] [&>*]:border-dotted [&>*]:border-gray-400'>
           <thead>
             <tr className='text-white bg-slate-800 uppercase'>
@@ -189,7 +251,7 @@ const SymptomsTables = () => {
               </tr>))}
           </tbody>
         </table>
-      </div>
+      </div> */}
 
     </div>
   )
