@@ -18,32 +18,32 @@ const columns = [
   {
     headerName: "Symptom",
     field: "symptom",
-    flex: 1
+    flex: 0.8
   },
   {
     headerName: "Stealth",
     field: "stealth",
-    flex: 0.25
+    flex: 0.3
   },
   {
     headerName: "Resistance",
     field: "resistance",
-    flex: 0.25
+    flex: 0.3
   },
   {
     headerName: "Stage Speed",
     field: "stage_speed",
-    flex: 0.25
+    flex: 0.3
   },
   {
     headerName: "Transmission",
     field: "transmission",
-    flex: 0.25
+    flex: 0.3
   },
   {
     headerName: "Level",
     field: "level",
-    flex: 0.25
+    flex: 0.3
   },
   {
     headerName: "Effect",
@@ -55,13 +55,44 @@ const columns = [
     headerName: "Required Chemical",
     field: "required_chemical",
     sortable: false,
-    flex: 1
+    flex: 0.5,
+    renderCell: (params) => {
+      console.log('params chem', params);
+      return (<ul>
+        {
+          params.row.required_chemical.map((chem, chIndex) => (
+            <li key={chIndex+"_chem_li_"+chem.name}>
+            -<a className='font-medium text-blue-600 underline dark:text-blue-500 hover:no-underline' 
+            target="_blank" 
+            href={chem.link}
+            key={chIndex+"_chemical_"+chem.name}
+            >
+              {chem.name} 
+            </a>
+          </li>
+          ))
+        }
+      </ul>)
+    }
   },
   {
     headerName: "Threshold",
     field: "threshold",
     sortable: false,
-    flex: 1
+    flex: 0.5,
+    renderCell: (params) => {
+      return (<ul>
+        {
+          params.row.threshold.map((t, tIndex) => {
+            return <li key={tIndex+"_thresh_list_"+t.name}>
+              - <span title={t.title} key={tIndex+"_allTID_"+t.name}>
+                {t.name}: {t.value}
+              </span>
+            </li>
+          })
+        }
+      </ul>)
+    }
   }
 ];
 
@@ -97,44 +128,13 @@ const SymptomsTables = () => {
   }
  
   function handleClick(symptom) {
-    // Removing Symptom //
-    if (symptom.selected) {
-      symptom.selected = false;
-      setIsSelected(isSelected.filter(a => a.id !== symptom.id));
-      setScores({
-        ...scores,
-        stealth_s: scores.stealth_s - symptom.stealth,
-        resistance_s: scores.resistance_s - symptom.resistance,
-        stage_speed_s: scores.stage_speed_s - symptom.stage_speed,
-        transmission_s: scores.transmission_s - symptom.transmission,
-        level_s: scores.level_s - symptom.level,
-      });
-      setIsThresholds(isThresholds.filter(a => a.id !== `${symptom.id}thresh`)); 
-    } else if (isSelected.length < 6) {
-      // Adding Symptom //
-      symptom.selected = true;
-      setIsSelected([...isSelected, symptom]);
-      setScores({
-        ...scores,
-        stealth_s: scores.stealth_s + symptom.stealth,
-        resistance_s: scores.resistance_s + symptom.resistance,
-        stage_speed_s: scores.stage_speed_s + symptom.stage_speed,
-        transmission_s: scores.transmission_s + symptom.transmission,
-        level_s: scores.level_s + symptom.level
-      });
-      const updateThresholds = symptom.threshold.map((t) => {
-        return {
-          id: t.id,
-          stat: t.symptom,
-          name: t.name,
-          value: t.value,
-          title: t.title,
-          fill: t.fill
-        };
-      });
-      updateThresholds.push(...isThresholds);
-      setIsThresholds(updateThresholds);
-    }
+    // Add Symptom
+
+    // Remove Symptom
+
+    // Update thresholds
+
+    // Update scores
   }
 
   useEffect(() => {
@@ -230,7 +230,8 @@ const SymptomsTables = () => {
           columns={columns}
           checkboxSelection
           hideFooter
-          onRowSelectionModelChange={item => console.log('selecting', item)}
+          onRowSelectionModelChange={item => console.log('selecting', allSymptoms[item])}
+
         />
       </div>
       {/* <div className=''>
