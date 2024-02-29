@@ -18,44 +18,52 @@ const columns = [
   {
     headerName: "Symptom",
     field: "symptom",
-    flex: 0.8
+    flex: 0.8,
+    headerClassName: 'text-white font-bold bg-slate-800 uppercase'
   },
   {
     headerName: "Stealth",
     field: "stealth",
-    flex: 0.3
+    flex: 0.3,
+    headerClassName: 'text-white font-bold bg-slate-800 uppercase'
   },
   {
     headerName: "Resistance",
     field: "resistance",
-    flex: 0.3
+    flex: 0.3,
+    headerClassName: 'text-white font-bold bg-slate-800 uppercase'
   },
   {
     headerName: "Stage Speed",
     field: "stage_speed",
-    flex: 0.3
+    flex: 0.3,
+    headerClassName: 'text-white font-bold bg-slate-800 uppercase'
   },
   {
     headerName: "Transmission",
     field: "transmission",
-    flex: 0.3
+    flex: 0.3,
+    headerClassName: 'text-white font-bold bg-slate-800 uppercase'
   },
   {
     headerName: "Level",
     field: "level",
-    flex: 0.3
+    flex: 0.3,
+    headerClassName: 'text-white font-bold bg-slate-800 uppercase'
   },
   {
     headerName: "Effect",
     field: "effect",
     sortable: false,
-    flex: 1
+    flex: 1,
+    headerClassName: 'text-white font-bold bg-slate-800 uppercase'
   },
   {
     headerName: "Required Chemical",
     field: "required_chemical",
     sortable: false,
     flex: 0.5,
+    headerClassName: 'text-white font-bold bg-slate-800 uppercase',
     renderCell: (params) => {
       console.log('params chem', params);
       return (<ul>
@@ -80,6 +88,7 @@ const columns = [
     field: "threshold",
     sortable: false,
     flex: 0.5,
+    headerClassName: 'text-white font-bold bg-slate-800 uppercase',
     renderCell: (params) => {
       return (<ul>
         {
@@ -230,8 +239,12 @@ const SymptomsTables = () => {
           columns={columns}
           checkboxSelection
           hideFooter
+          getRowHeight={() => 'auto'}
           onRowSelectionModelChange={item => console.log('selecting', allSymptoms[item])}
-
+          sx={{
+            "& .MuiDataGrid-columnHeaderCheckbox .MuiDataGrid-columnHeaderTitleContainer": {
+              display: "none"
+            }}}
         />
       </div>
       {/* <div className=''>
