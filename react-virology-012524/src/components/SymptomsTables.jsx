@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 
 import { SYMPTOMS } from '../assets/symptoms'
 import Symptom from './Symptom'
@@ -8,7 +8,9 @@ import SummedScores from './SummedScores';
 
 import ScoreChart from './ScoreChart';
 
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, useGridApiRef } from '@mui/x-data-grid';
+import { Alert, Box, IconButton, Collapse, Button } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 
 
 const table_headers = ["Symptom", "Stealth", "Resistance", "Stage Speed", "Transmission", "Level", "Effect", "Required Chemical", "Threshold"];
@@ -55,7 +57,7 @@ const columns = [
     headerName: "Effect",
     field: "effect",
     sortable: false,
-    flex: 1,
+    flex: 1.2,
     headerClassName: 'text-white font-bold bg-slate-800 uppercase'
   },
   {
@@ -65,7 +67,6 @@ const columns = [
     flex: 0.5,
     headerClassName: 'text-white font-bold bg-slate-800 uppercase',
     renderCell: (params) => {
-      console.log('params chem', params);
       return (<ul>
         {
           params.row.required_chemical.map((chem, chIndex) => (
@@ -87,7 +88,7 @@ const columns = [
     headerName: "Threshold",
     field: "threshold",
     sortable: false,
-    flex: 0.5,
+    flex: 0.4,
     headerClassName: 'text-white font-bold bg-slate-800 uppercase',
     renderCell: (params) => {
       return (<ul>
@@ -121,6 +122,12 @@ const SymptomsTables = () => {
   });
   const [transmissionVector, setTransMissionVector] = useState('BLOOD');
 
+  // DATA GRID
+  const apiRef = useGridApiRef();
+  const [open, setOpen] = useState(true);
+  const [rowSelectionModel, setRowSelectionModel] = useState([]);
+
+
   function clearAll() {
     isSelected.map((symptom) => {
       symptom.selected = false;
@@ -138,6 +145,14 @@ const SymptomsTables = () => {
  
   function handleClick(symptom) {
     // Add Symptom
+    console.log('handlin', symptom.row);
+    console.log('rowselection', rowSelectionModel);
+    if (rowSelectionModel.length >= 6){
+
+    } else {
+      setIsSelected([...isSelected, symptom.row]);
+    }
+    
 
     // Remove Symptom
 
@@ -145,6 +160,14 @@ const SymptomsTables = () => {
 
     // Update scores
   }
+
+  const isRowSelectable = useCallback(
+    (params) => {
+      if (rowSelectionModel.includes(params.id)) return true;
+      if (rowSelectionModel.length >= 6) return false;
+      return true;
+    }
+  );
 
   useEffect(() => {
     let vector = scores.transmission_s > 10 ? 'AIRBORNE' : scores.transmission_s > 6 ? 'SKIN CONTACT' : scores.transmission_s > 2 ? 'FLUID' : 'BLOOD';
@@ -156,66 +179,22 @@ const SymptomsTables = () => {
 
       {/* SELECTED SYMPTOMS TABLE */}
       <div className='sticky top-0 z-10 w-full max-h-screen'>
-        <table className='w-full table-fixed'>
-          <thead>
-            <tr>
-              {table_headers.map((header, i) => <th className='text-white bg-slate-800 uppercase border-r-[1px] border-b-[1px] border-dotted border-gray-400 text-sm' key={i+"_header"}>{header}</th>)}
-            </tr>
-          </thead>
-          <tbody className={`overflow-x-hidden transition-all duration-150 ${visible ? '' : 'hidden'}`}>
-              {isSelected.map((symptom) => (
-                <tr className="even:bg-gray-50 odd:bg-white
-                hover:bg-slate-900 hover:text-white duration-300"
-                    key={symptom.id+"_symptom_row"}
-                    onClick={() => handleClick(symptom)}
-                    >
-                  <Symptom key={`selected-${symptom.id}`} {...symptom} />
-                </tr>
-              ))}
-              {/* EMPTY ROWS */}
-              {[...Array(6 - isSelected.length)].map((empty, i) => (
-                <tr key={`empty-${i}`} className='text-center [&>*]:border-[1px] [&>*]:border-dotted [&>*]:border-gray-400 even:bg-gray-50 odd:bg-white'><td>---</td><td>---</td><td>---</td><td>---</td><td>---</td><td>---</td><td>---</td><td>---</td><td>---</td></tr>
-              ))}
-          </tbody>
-            {/* Totals */}
-          <tfoot className='[&>*]:border-[1px] [&>*]:border-dotted [&>*]:border-gray-400 [&>*]:bg-slate-600
-                          [&>*]:uppercase [&>*]:text-white [&>*]:font-bold [&>*]:text-center'>
-            <tr className='[&>*]:border-[1px] [&>*]:border-dotted [&>*]:border-gray-400 [&>*]:bg-slate-600
-                          [&>*]:uppercase [&>*]:text-white [&>*]:font-bold [&>*]:text-center'>
-              <td className=''>TOTAL</td>
-              <td className='text-center'>{scores.stealth_s}</td>
-              <td className='text-center'>{scores.resistance_s}</td>
-              <td className='text-center'>{scores.stage_speed_s}</td>
-              <td className='text-center'>{scores.transmission_s}</td>
-              <td className='text-center'>{scores.level_s}</td>
 
-              <td>---</td>
-              <td>---</td>
-              <td
-                rowSpan={2} 
-                className='hover:bg-blue-600 duration-150 cursor-pointer'
-                onClick={() => clearAll()}
-              >
-                <div>CLEAR ALL</div>
-              </td>
-              {/* <td>{transmissionVector}</td>
-              <td>Potential Cures</td>
-              <td>---</td> */}
-            </tr>
-            <tr className='[&>*]:text-xs
-                          [&>*]:border-[1px] [&>*]:border-dotted [&>*]:border-gray-400 [&>*]:bg-slate-800
-                          [&>*]:uppercase [&>*]:text-white [&>*]:font-bold [&>*]:text-center'>
-              <td>{isSelected.length ? isSelected.length : 0} / 6</td>
-              <td>{scores.stealth_s >= 2 ? "HIDDEN" : "NOT HIDDEN"}</td>
-              <td>---</td>
-              <td>{scores.stage_speed_s < 2 ? "2%" : `${scores.stage_speed_s}%`}</td>
-              <td>{transmissionVector}</td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-          </tfoot>
-        </table>
+      <DataGrid 
+          rows={isSelected}
+          columns={columns}
+          // checkboxSelection
+          hideFooter
+          rowHeight={100}
+          // getRowHeight={() => 'auto'}
+          // onRowSelectionModelChange={item => {
+          //   handleClick(item);
+          // }}
+          sx={{
+            "& .MuiDataGrid-columnHeaderCheckbox .MuiDataGrid-columnHeaderTitleContainer": {
+              display: "none"
+            }}}
+        />
         {/* Show / Hide Selected table */}
           <div
             className='h-[25px] rounded-b-xl text-center cursor-pointer
@@ -234,13 +213,54 @@ const SymptomsTables = () => {
         {/* ALL SYMPTOMS TABLE */}
 
       <div>
+      {/* <Box sx={{ width: '100%' }}>
+                <Collapse in={open}>
+                  <Alert
+                    action={
+                      <IconButton
+                        aria-label="close"
+                        color="inherit"
+                        size="small"
+                        onClick={() => {
+                          setOpen(false);
+                        }}
+                      >
+                        <CloseIcon fontSize="inherit" />
+                      </IconButton>
+                    }
+                    sx={{ mb: 2 }}
+                  >
+                    Click the close icon to see the Collapse transition in action!
+                  </Alert>
+                </Collapse>
+                <Button
+                  disabled={open}
+                  variant="outlined"
+                  onClick={() => {
+                    setOpen(true);
+                  }}
+                >
+                  Re-open
+                </Button>
+      </Box> */}
         <DataGrid 
           rows={allSymptoms}
           columns={columns}
-          checkboxSelection
+          // checkboxSelection
           hideFooter
-          getRowHeight={() => 'auto'}
-          onRowSelectionModelChange={item => console.log('selecting', allSymptoms[item])}
+          // getRowHeight={() => 'auto'}
+          apiRef={apiRef}
+          isRowSelectable={isRowSelectable}
+          onRowSelectionModelChange={setRowSelectionModel}
+          rowSelectionModel={rowSelectionModel}
+          onRowClick={handleClick}
+          // {item => {
+          //   if (item.length === 6){
+              
+          //   } else {
+          //     handleClick(item);
+          //   }
+          // }}
           sx={{
             "& .MuiDataGrid-columnHeaderCheckbox .MuiDataGrid-columnHeaderTitleContainer": {
               display: "none"
