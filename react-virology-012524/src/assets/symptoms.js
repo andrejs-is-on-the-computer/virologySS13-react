@@ -540,7 +540,10 @@ function return_symptoms() {
 
         t_key = new_symps[j][0][0];
         t_value = new_symps[j][0][1];
-        temp = {symptom : new_symps[j][0][1],
+        temp = {    
+                    id: j,
+                    selected: false,
+                    symptom : new_symps[j][0][1],
                     stealth: new_symps[j][1][1],
                     resistance: new_symps[j][2][1],
                     stage_speed: new_symps[j][3][1],
@@ -550,8 +553,7 @@ function return_symptoms() {
                     effect: new_symps[j][7][1],
                     threshold: thresholds,
                     // rtThreshold: rtThresholds,
-                    id: j,
-                    selected: false};
+                    };
         }
         new_obj.push(temp);
     }
