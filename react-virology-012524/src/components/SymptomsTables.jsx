@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import AllSymptoms from './AllSymptoms'
+import AllSymptoms from './AllSymptoms/AllSymptoms'
 import { SYMPTOMS } from '../assets/symptoms'
 
 const SymptomsTables = () => {
