@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
+import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined';
+import ArrowDropUpOutlinedIcon from '@mui/icons-material/ArrowDropUpOutlined';
 import './table.css';
 
 const returnArray = (array) => {
@@ -38,15 +39,14 @@ const returnArray = (array) => {
 
 const AllSymptoms = ({ rows }) => {
   const [sortedRows, setRows] = useState(rows);
-  const [order, setOrder] = useState('desc');
+  const [order, setOrder] = useState(1);
   const [sortKey, setSortKey] = useState(Object.keys(rows[0])[2]);
 
+  // Text input to filter results
   const filter = (event) => {
     const value = event.target.value.toLowerCase();
-
     if (value) {
       setRows([...rows.filter(row => {
-        // console.log('filter', Object.values(row).join(''));
         return Object.values(row)
           .join('')
           .toLowerCase()
@@ -56,14 +56,11 @@ const AllSymptoms = ({ rows }) => {
       setRows(rows)
     }
   };
+  // Attached to column headers, click to order, click again to reverse order
   const sort = (event) => {
-    const returnValue = order === 'desc' ? 1 : -1;
-    console.log('-----------------------------------');
-    // console.log('returnValue', returnValue);
-    // console.log('argument', event.target.firstChild.data.toLowerCase());
-    // console.log('order', order);
-    const value = event.target ? event.target.firstChild.data.toLowerCase() : sortKey;
-    // console.log('value', value);
+    const value = event ? event.toLowerCase().split(" ").join("_") : sortKey;
+    const returnValue = value === sortKey && order === 1 ? -1 : 1;
+    setOrder(returnValue);
     setSortKey(value);
     setRows([...sortedRows.sort((a,b) => {
       return a[value] > b[value]
@@ -71,13 +68,7 @@ const AllSymptoms = ({ rows }) => {
             : returnValue
     })])
   };
-  const updateOrder = (event) => {
-    const updatedOrder = order === 'asc' ? 'desc' : 'asc';
-
-    setOrder(updatedOrder);
-    sort(sortKey);
-  };
-
+  // Handling selecting and deselecting elements
   const handleClick = (row) => {
     let sorted = [...sortedRows];
     let clicked = {...sorted[row.id]};
@@ -94,20 +85,32 @@ const AllSymptoms = ({ rows }) => {
           placeholder='Filter items'
           onChange={filter}
         />
-        <select onChange={sort}>
+        {/* <select onChange={sort}>
           {Object.keys(rows[0]).slice(2).map((entry, index) => (
             <option value={entry} key={index}>
               Order by {entry.toUpperCase().split("_").join(" ")}
             </option>
           ))}
         </select>
-        <button onClick={updateOrder}>Switch order ({order})</button>
+        <button onClick={updateOrder}>Switch order ({order})</button> */}
       </div>
-      <table className='w-full mb-[60px] table-fixed'>
+      <table className='w-full mb-[60px] table-auto'>
         <thead>
           <tr className='text-white bg-slate-800 uppercase'>
             {Object.keys(rows[0]).slice(2).map((entry, index) => (
-              <th className='cursor-pointer' value={entry} onClick={sort} key={`${index}-all-head`}>{entry.toUpperCase().split("_").join(" ")}</th>
+              <th 
+                className='text-sm cursor-pointer hover:bg-slate-500 hover:text-white duration-300' 
+                value={entry} 
+                onClick={() => sort(entry)} 
+                key={`${index}-all-head`}
+              >
+                {entry.toUpperCase().split("_").join(" ")}
+                {console.log(sortKey)}
+                <span className=''>
+                  {/* <ArrowDropUpOutlinedIcon className='' /> */}
+                  <ArrowDropDownOutlinedIcon className={``} />
+                </span>
+              </th>
             ))}
           </tr>
         </thead>
