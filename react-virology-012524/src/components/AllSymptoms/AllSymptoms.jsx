@@ -108,7 +108,8 @@ const AllSymptoms = ({ rows }) => {
                 {console.log(sortKey)}
                 <span className=''>
                   {/* <ArrowDropUpOutlinedIcon className='' /> */}
-                  <ArrowDropDownOutlinedIcon className={``} />
+                  {/* <ArrowDropDownOutlinedIcon className={sortKey === entry ? 'text-white' : 'text-slate-600'} /> */}
+                  {sortKey !== entry ? <ArrowDropDownOutlinedIcon className='text-slate-600' /> : order === 1 ? <ArrowDropDownOutlinedIcon className='text-white' /> : <ArrowDropUpOutlinedIcon className='text-white' />}
                 </span>
               </th>
             ))}
