@@ -51,15 +51,7 @@ const emptySymptoms = [{
 
 const headers = ['SYMPTOM', 'STEALTH', 'RESISTANCE', 'STAGE SPEED', 'TRANSMISSION', 'LEVEL', 'REQUIRED CHEMICAL', 'EFFECT', 'THRESHOLD'];
 
-const SelectedSymptoms = ({ rows, sendDataToParent }) => {
-
-  const [selectedRows, setSelectedRows] = useState([]);
-  
-
-  useEffect(() => {
-    let updatedSelected = [...rows];
-    setSelectedRows(updatedSelected);
-  }, [rows]);
+const SelectedSymptoms = ({ rows, counts, sendDataToParent }) => {
   
   // Handling deselecting elements, sending updated array to parent
   const handleClick = (row) => {
@@ -68,12 +60,12 @@ const SelectedSymptoms = ({ rows, sendDataToParent }) => {
 
   return (
       <div className='mx-2'>
-        <table className='w-full table-fixed'>
+        <table className='w-full table-fixed '>
           <thead>
-            <tr className='text-white bg-slate-800 uppercase select-none'>
+            <tr className='text-white bg-slate-800 uppercase select-none [&>*]:border-[1px] [&>*]:border-dotted [&>*]:border-gray-400'>
               {headers.map((entry, index) => (
                 <th 
-                  className={`text-xs ${index > 0 && index < 7 ? 'flex-none' : 'grow'}`} 
+                  className={`text-xs [&>*]:border-[1px] [&>*]:border-dotted [&>*]:border-gray-400 ${index > 0 && index < 7 ? 'flex-none' : 'grow'}`} 
                   key={`${index}-all-head`}
                 >
                   {entry}
@@ -82,7 +74,7 @@ const SelectedSymptoms = ({ rows, sendDataToParent }) => {
             </tr>
           </thead>
           <tbody>
-            {selectedRows.map((row, index) => (
+            {rows.map((row, index) => (
               
               <tr 
                 key={`${index}-all-row`} 
@@ -97,33 +89,34 @@ const SelectedSymptoms = ({ rows, sendDataToParent }) => {
               </tr>
             ))}
           </tbody>
-          <tfoot>
+          <tfoot className='[&>*]:border-[1px] [&>*]:border-dotted [&>*]:border-gray-400 
+                          [&>*]:uppercase [&>*]:text-white [&>*]:font-bold [&>*]:text-center'>
             <tr className='text-white bg-slate-800 uppercase select-none'>
                   <td className='text-center'>
-                    {selectedRows.length} / 6
+                    {rows.length} / 6
                   </td>
-                  <td>
-
+                  <td key={counts.stealth} className=''>
+                    {counts.stealth}
                   </td>
-                  <td>
+                  <td className=''>
+                    {counts.resistance}
+                  </td>
+                  <td className=''>
+                    {counts.stage_speed}
+                  </td>
+                  <td className=''>
+                    {counts.transmission}
+                  </td>
+                  <td className=''>
+                    {counts.level}
+                  </td>
+                  <td className=''>
+                  
+                  </td>
+                  <td className=''>
                     
                   </td>
-                  <td>
-                    
-                  </td>
-                  <td>
-                    
-                  </td>
-                  <td>
-                    
-                  </td>
-                  <td>
-                    
-                  </td>
-                  <td>
-                    
-                  </td>
-                  <td>
+                  <td className=''>
                     
                   </td>
             </tr>

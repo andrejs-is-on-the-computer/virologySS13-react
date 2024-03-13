@@ -17,7 +17,7 @@ import {
 } from 'recharts';
 
 
-const ScoreChart = ({stealth_s, resistance_s, stage_speed_s, transmission_s, thresholds}) => {
+const ScoreChart = ({rows}) => {
 
   const data = [
     {
