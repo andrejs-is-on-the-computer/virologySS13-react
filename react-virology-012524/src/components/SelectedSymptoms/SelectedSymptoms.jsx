@@ -54,11 +54,11 @@ const headers = ['SYMPTOM', 'STEALTH', 'RESISTANCE', 'STAGE SPEED', 'TRANSMISSIO
 const SelectedSymptoms = ({ rows, sendDataToParent }) => {
 
   const [selectedRows, setSelectedRows] = useState([]);
+  
 
   useEffect(() => {
     let updatedSelected = [...rows];
     setSelectedRows(updatedSelected);
-    console.log(updatedSelected);
   }, [rows]);
   
   // Handling deselecting elements, sending updated array to parent
@@ -67,38 +67,69 @@ const SelectedSymptoms = ({ rows, sendDataToParent }) => {
   }
 
   return (
-    <>
-      <table className='w-full table-auto'>
-        <thead>
-          <tr className='text-white bg-slate-800 uppercase select-none'>
-            {headers.map((entry, index) => (
-              <th 
-                className='text-xs' 
-                key={`${index}-all-head`}
-              >
-                {entry}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {selectedRows.map((row, index) => (
-            
-            <tr 
-              key={`${index}-all-row`} 
-              className={`cursor-pointer hover:bg-slate-900 hover:text-white duration-300 even:bg-gray-50 odd:bg-white`}
-              onClick={() => handleClick(row)}
-              >
-              {Object.values(row).slice(2).map((entry, columnIndex) => 
-                <td key={`${columnIndex}-all-column`} className={`max-w-[300px] border-[1px] border-dotted border-gray-400 ${columnIndex >= 6 || columnIndex == 0 ? 'text-xs' : 'text-center'}`}>
-                  {Array.isArray(entry) ? returnArray(entry) : entry}
-                </td>
-              )}
+      <div className='mx-2'>
+        <table className='w-full table-fixed'>
+          <thead>
+            <tr className='text-white bg-slate-800 uppercase select-none'>
+              {headers.map((entry, index) => (
+                <th 
+                  className={`text-xs ${index > 0 && index < 7 ? 'flex-none' : 'grow'}`} 
+                  key={`${index}-all-head`}
+                >
+                  {entry}
+                </th>
+              ))}
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </>
+          </thead>
+          <tbody>
+            {selectedRows.map((row, index) => (
+              
+              <tr 
+                key={`${index}-all-row`} 
+                className={`cursor-pointer hover:bg-slate-900 hover:text-white duration-300 even:bg-gray-50 odd:bg-white`}
+                onClick={() => handleClick(row)}
+                >
+                {Object.values(row).slice(2).map((entry, columnIndex) => 
+                  <td key={`${columnIndex}-all-column`} className={`max-w-[300px] border-[1px] border-dotted border-gray-400 ${columnIndex >= 6 || columnIndex == 0 ? 'text-xs' : 'text-center'}`}>
+                    {Array.isArray(entry) ? returnArray(entry) : entry}
+                  </td>
+                )}
+              </tr>
+            ))}
+          </tbody>
+          <tfoot>
+            <tr className='text-white bg-slate-800 uppercase select-none'>
+                  <td className='text-center'>
+                    {selectedRows.length} / 6
+                  </td>
+                  <td>
+
+                  </td>
+                  <td>
+                    
+                  </td>
+                  <td>
+                    
+                  </td>
+                  <td>
+                    
+                  </td>
+                  <td>
+                    
+                  </td>
+                  <td>
+                    
+                  </td>
+                  <td>
+                    
+                  </td>
+                  <td>
+                    
+                  </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
   )
 }
 

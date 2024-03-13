@@ -34,7 +34,9 @@ const SymptomsTables = () => {
     
     <div className='w-full'>
       {/* Selected Table */}
+      <div className='fixed z-10'>
       <SelectedSymptoms rows={selected} sendDataToParent={handleData} />
+      </div>
       {/* Graph */}
 
       {/* Main Table */}

@@ -36,34 +36,10 @@ const returnArray = (array) => {
   return array[0].name;
 }
 
-function emptyTable() {
-  return [{
-    id: 'none',
-    selected: false,
-    symptom: '---',
-    stealth: '---',
-    resistance: '---',
-    stage_speed: '---',
-    transmissions: '---',
-    level: '---',
-    required_chemical: [{name: '---', link: '---', value: '---', title: '---'}],
-    effect: '---',
-    threshhold: [{name: '---', link: '---', value: '---', title: '---'}],
-  }]
-}
-
-const headers = ['SYMPTOM', 'STEALTH', 'RESISTANCE', 'STAGE SPEED', 'TRANSMISSION', 'LEVEL', 'REQUIRED CHEMICAL', 'EFFECT', 'THRESHOLD'];
-
 const AllSymptoms = ({ rows, sendDataToParent }) => {
   const [sortedRows, setRows] = useState(rows);
   const [order, setOrder] = useState(1);
   const [sortKey, setSortKey] = useState(Object.keys(rows[0])[2]);
-  const [selected, setSelected] = useState([]);
-  // useEffect(() => {
-  //   let updatedSelected = [...sortedRows];
-    
-  //   setRows(updatedSelected);
-  // }, [sortedRows]);
 
   // Text input to filter results
   const filter = (event) => {
@@ -102,7 +78,7 @@ const AllSymptoms = ({ rows, sendDataToParent }) => {
   }
 
   return (
-    <>
+    <div className='mx-2'>
       <div className='controls'>
         <input 
           type="text"
@@ -110,16 +86,20 @@ const AllSymptoms = ({ rows, sendDataToParent }) => {
           onChange={filter}
         />
       </div>
-      <table className='w-full mb-[60px] table-auto'>
+      <table className='w-full mb-[60px] table-fixed'>
         <thead>
-          <tr className='text-white bg-slate-800 uppercase select-none'>
+          <tr className='text-white bg-slate-800 uppercase select-none sticky'>
             {Object.keys(rows[0]).slice(2).map((entry, index) => (
                 <th 
-                  className='text-xs cursor-pointer hover:bg-slate-500 hover:text-white duration-300' 
+                  className={`
+                  text-xs cursor-pointer hover:bg-slate-500 hover:text-white duration-300
+                  ${index > 0 && index < 7 ? 'flex-none' : 'grow'}
+                  `}
                   value={entry} 
                   onClick={() => sort(entry)} 
                   key={`${index}-all-head`}
                 >
+                  {/* {index} */}
                   {entry.toUpperCase().split("_").join(" ")}
                   <span className=''>
                     {sortKey !== entry ? <ArrowDropDownOutlinedIcon className='text-slate-600' /> : order === 1 ? <ArrowDropDownOutlinedIcon className='text-white' /> : <ArrowDropUpOutlinedIcon className='text-white' />}
@@ -136,7 +116,12 @@ const AllSymptoms = ({ rows, sendDataToParent }) => {
               onClick={() => handleClick(symptomRow)}
               >
                {Object.values(symptomRow).slice(2).map((entry, columnIndex) => 
-                <td key={`${columnIndex}-all-column`} className={`max-w-[300px] border-[1px] border-dotted border-gray-400 ${columnIndex >= 6 ? 'text-sm' : 'text-center'}`}>
+                <td key={`${columnIndex}-all-column`} 
+                className={
+                  `max-w-[300px] border-[1px] border-dotted border-gray-400 
+                  ${columnIndex >= 6 || columnIndex == 0 ? 'text-xs' : 'text-center'}
+                  
+                  `}>
                   {Array.isArray(entry) ? returnArray(entry) : entry}
                 </td>
                 )}
@@ -147,7 +132,7 @@ const AllSymptoms = ({ rows, sendDataToParent }) => {
       {!sortedRows.length && (
         <h1 className='text-4xl text-center'>No results... Try expanding the search</h1>
       )}
-    </>
+    </div>
   )
 }
 
