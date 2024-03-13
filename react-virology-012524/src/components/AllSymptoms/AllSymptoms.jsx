@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined';
 import ArrowDropUpOutlinedIcon from '@mui/icons-material/ArrowDropUpOutlined';
-import './table.css';
 
 const returnArray = (array) => {
   if (Object.keys(array[0]).length > 2) {
@@ -37,10 +36,34 @@ const returnArray = (array) => {
   return array[0].name;
 }
 
-const AllSymptoms = ({ rows }) => {
+function emptyTable() {
+  return [{
+    id: 'none',
+    selected: false,
+    symptom: '---',
+    stealth: '---',
+    resistance: '---',
+    stage_speed: '---',
+    transmissions: '---',
+    level: '---',
+    required_chemical: [{name: '---', link: '---', value: '---', title: '---'}],
+    effect: '---',
+    threshhold: [{name: '---', link: '---', value: '---', title: '---'}],
+  }]
+}
+
+const headers = ['SYMPTOM', 'STEALTH', 'RESISTANCE', 'STAGE SPEED', 'TRANSMISSION', 'LEVEL', 'REQUIRED CHEMICAL', 'EFFECT', 'THRESHOLD'];
+
+const AllSymptoms = ({ rows, sendDataToParent }) => {
   const [sortedRows, setRows] = useState(rows);
   const [order, setOrder] = useState(1);
   const [sortKey, setSortKey] = useState(Object.keys(rows[0])[2]);
+  const [selected, setSelected] = useState([]);
+  // useEffect(() => {
+  //   let updatedSelected = [...sortedRows];
+    
+  //   setRows(updatedSelected);
+  // }, [sortedRows]);
 
   // Text input to filter results
   const filter = (event) => {
@@ -70,11 +93,12 @@ const AllSymptoms = ({ rows }) => {
   };
   // Handling selecting and deselecting elements
   const handleClick = (row) => {
-    let sorted = [...sortedRows];
-    let clicked = {...sorted[row.id]};
-    clicked.selected = !clicked.selected;
-    sorted[row.id] = clicked;
-    setRows([...sorted]);
+    row.selected = !row.selected;
+    let temp = sortedRows.map((symp) => {
+      return symp.id === row.id ? row : symp;
+    });
+    setRows([...temp]);
+    sendDataToParent([...temp]);
   }
 
   return (
@@ -85,48 +109,37 @@ const AllSymptoms = ({ rows }) => {
           placeholder='Filter items'
           onChange={filter}
         />
-        {/* <select onChange={sort}>
-          {Object.keys(rows[0]).slice(2).map((entry, index) => (
-            <option value={entry} key={index}>
-              Order by {entry.toUpperCase().split("_").join(" ")}
-            </option>
-          ))}
-        </select>
-        <button onClick={updateOrder}>Switch order ({order})</button> */}
       </div>
       <table className='w-full mb-[60px] table-auto'>
         <thead>
-          <tr className='text-white bg-slate-800 uppercase'>
+          <tr className='text-white bg-slate-800 uppercase select-none'>
             {Object.keys(rows[0]).slice(2).map((entry, index) => (
-              <th 
-                className='text-sm cursor-pointer hover:bg-slate-500 hover:text-white duration-300' 
-                value={entry} 
-                onClick={() => sort(entry)} 
-                key={`${index}-all-head`}
-              >
-                {entry.toUpperCase().split("_").join(" ")}
-                {console.log(sortKey)}
-                <span className=''>
-                  {/* <ArrowDropUpOutlinedIcon className='' /> */}
-                  {/* <ArrowDropDownOutlinedIcon className={sortKey === entry ? 'text-white' : 'text-slate-600'} /> */}
-                  {sortKey !== entry ? <ArrowDropDownOutlinedIcon className='text-slate-600' /> : order === 1 ? <ArrowDropDownOutlinedIcon className='text-white' /> : <ArrowDropUpOutlinedIcon className='text-white' />}
-                </span>
-              </th>
-            ))}
+                <th 
+                  className='text-xs cursor-pointer hover:bg-slate-500 hover:text-white duration-300' 
+                  value={entry} 
+                  onClick={() => sort(entry)} 
+                  key={`${index}-all-head`}
+                >
+                  {entry.toUpperCase().split("_").join(" ")}
+                  <span className=''>
+                    {sortKey !== entry ? <ArrowDropDownOutlinedIcon className='text-slate-600' /> : order === 1 ? <ArrowDropDownOutlinedIcon className='text-white' /> : <ArrowDropUpOutlinedIcon className='text-white' />}
+                  </span>
+                </th>
+              ))}
           </tr>
         </thead>
         <tbody>
-          {sortedRows.map((row, index) => (
+          {sortedRows.map((symptomRow, index) => (
             <tr 
               key={`${index}-all-row`} 
-              className={`hover:bg-slate-900 hover:text-white duration-300 ${row.selected ? "bg-blue-300" : "even:bg-gray-50 odd:bg-white"}`}
-              onClick={() => handleClick(row)}
+              className={`cursor-pointer hover:bg-slate-900 hover:text-white duration-300 ${symptomRow.selected ? "bg-blue-300" : "even:bg-gray-50 odd:bg-white"}`}
+              onClick={() => handleClick(symptomRow)}
               >
-              {Object.values(row).slice(2).map((entry, columnIndex) => 
+               {Object.values(symptomRow).slice(2).map((entry, columnIndex) => 
                 <td key={`${columnIndex}-all-column`} className={`max-w-[300px] border-[1px] border-dotted border-gray-400 ${columnIndex >= 6 ? 'text-sm' : 'text-center'}`}>
                   {Array.isArray(entry) ? returnArray(entry) : entry}
                 </td>
-              )}
+                )}
             </tr>
           ))}
         </tbody>
