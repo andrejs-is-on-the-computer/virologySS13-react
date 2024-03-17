@@ -40,6 +40,8 @@ const AllSymptoms = ({ rows, sendDataToParent }) => {
   const [sortedRows, setRows] = useState(rows);
   const [order, setOrder] = useState(1);
   const [sortKey, setSortKey] = useState(Object.keys(rows[0])[2]);
+  const [warning, setWarning] = useState(false);
+  // const [selectedCount, setSelectedCount] = useState(0);
 
   // Text input to filter results
   const filter = (event) => {
@@ -69,7 +71,15 @@ const AllSymptoms = ({ rows, sendDataToParent }) => {
   };
   // Handling selecting and deselecting elements
   const handleClick = (row) => {
-    row.selected = !row.selected;
+    let selectedCount = rows.filter(x => x.selected).length;
+
+    // Stop selection if 6 are already selected
+    if (!row.selected && selectedCount === 6){
+      setWarning(true);
+    } else {
+      row.selected = !row.selected;
+    }
+    
     let temp = sortedRows.map((symp) => {
       return symp.id === row.id ? row : symp;
     });
@@ -78,7 +88,17 @@ const AllSymptoms = ({ rows, sendDataToParent }) => {
   }
 
   return (
-    <div className='mx-2'>
+    <div className=''>
+      <div className='w-full flex items-center justify-center text-center'>
+        {warning 
+        ? <div class="w-[80%] bg-red-100 border border-red-400 text-red-700 mx-4 px-4 py-3 rounded fixed bottom-1 z-50 cursor-pointer" onClick={() => setWarning(false)} role="alert">
+            <strong class="font-bold">You can only select 6 symptoms</strong>
+            <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
+              <svg class="fill-current h-6 w-6 text-red-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
+            </span>
+          </div> 
+        : '' }
+      </div>
       <div className='controls'>
         <input 
           type="text"
@@ -88,7 +108,7 @@ const AllSymptoms = ({ rows, sendDataToParent }) => {
       </div>
       <table className='w-full mb-[60px] table-fixed'>
         <thead>
-          <tr className='text-white bg-slate-800 uppercase select-none sticky'>
+          <tr className='text-white bg-slate-800 uppercase select-none sticky top-[53.6px]'>
             {Object.keys(rows[0]).slice(2).map((entry, index) => (
                 <th 
                   className={`

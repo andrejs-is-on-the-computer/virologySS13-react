@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined';
 import ArrowDropUpOutlinedIcon from '@mui/icons-material/ArrowDropUpOutlined';
 
@@ -52,20 +52,30 @@ const emptySymptoms = [{
 const headers = ['SYMPTOM', 'STEALTH', 'RESISTANCE', 'STAGE SPEED', 'TRANSMISSION', 'LEVEL', 'REQUIRED CHEMICAL', 'EFFECT', 'THRESHOLD'];
 
 const SelectedSymptoms = ({ rows, counts, sendDataToParent }) => {
-  
+  const [show, setShow] = useState(true);
+
   // Handling deselecting elements, sending updated array to parent
   const handleClick = (row) => {
     sendDataToParent(row);
   }
 
+  function hideShow() {
+    let tempShow = show;
+    setShow(!tempShow);
+  }
+
+  function clearAll() {
+    sendDataToParent('CLEAR');
+  }
+
   return (
-      <div className='mx-2'>
-        <table className='w-full table-fixed '>
-          <thead>
-            <tr className='text-white bg-slate-800 uppercase select-none [&>*]:border-[1px] [&>*]:border-dotted [&>*]:border-gray-400'>
+      <div className=''>
+        <table className='w-full table-fixed'>
+          <thead className=''>
+            <tr className='text-white bg-slate-800 uppercase select-none'>
               {headers.map((entry, index) => (
                 <th 
-                  className={`text-xs [&>*]:border-[1px] [&>*]:border-dotted [&>*]:border-gray-400 ${index > 0 && index < 7 ? 'flex-none' : 'grow'}`} 
+                  className={`text-xs ${index > 0 && index < 7 ? 'flex-none' : 'grow'}`} 
                   key={`${index}-all-head`}
                 >
                   {entry}
@@ -74,8 +84,13 @@ const SelectedSymptoms = ({ rows, counts, sendDataToParent }) => {
             </tr>
           </thead>
           <tbody>
-            {rows.map((row, index) => (
-              
+            {!show ? '' : rows.length === 0 
+              ? <tr className='even:bg-gray-50 odd:bg-white'>
+              {headers.map((x) => {
+                return <td className='border-[1px] border-dotted border-gray-400 text-center'>---</td>
+              })}
+              </tr>
+              : rows.map((row, index) => (
               <tr 
                 key={`${index}-all-row`} 
                 className={`cursor-pointer hover:bg-slate-900 hover:text-white duration-300 even:bg-gray-50 odd:bg-white`}
@@ -89,39 +104,62 @@ const SelectedSymptoms = ({ rows, counts, sendDataToParent }) => {
               </tr>
             ))}
           </tbody>
-          <tfoot className='[&>*]:border-[1px] [&>*]:border-dotted [&>*]:border-gray-400 
-                          [&>*]:uppercase [&>*]:text-white [&>*]:font-bold [&>*]:text-center'>
-            <tr className='text-white bg-slate-800 uppercase select-none'>
-                  <td className='text-center'>
-                    {rows.length} / 6
-                  </td>
-                  <td key={counts.stealth} className=''>
-                    {counts.stealth}
-                  </td>
-                  <td className=''>
-                    {counts.resistance}
-                  </td>
-                  <td className=''>
-                    {counts.stage_speed}
-                  </td>
-                  <td className=''>
-                    {counts.transmission}
-                  </td>
-                  <td className=''>
-                    {counts.level}
-                  </td>
-                  <td className=''>
-                  
-                  </td>
-                  <td className=''>
-                    
-                  </td>
-                  <td className=''>
-                    
-                  </td>
-            </tr>
+          <tfoot>
+            <tr className='h-4 bg-slate-800'><td colSpan={9}></td></tr>
           </tfoot>
+          {/* <tfoot className='uppercase text-white font-bold text-center sticky top-[20px]'>
+            <tr className='text-white bg-slate-800 uppercase select-none'>
+              <td rowSpan={2} className='text-center border-[1px] border-dotted border-gray-400'>
+                {rows.length} / 6
+              </td>
+              <td className='text-center border-[1px] border-dotted border-gray-400'>
+                {counts.stealth}
+              </td>
+              <td className='text-center border-[1px] border-dotted border-gray-400'>
+                {counts.resistance}
+              </td>
+              <td className='text-center border-[1px] border-dotted border-gray-400'>
+                {counts.stage_speed}
+              </td>
+              <td className='text-center border-[1px] border-dotted border-gray-400'>
+                {counts.transmission}
+              </td>
+              <td rowSpan={2} className='text-center border-[1px] border-dotted border-gray-400'>
+                {counts.level}
+              </td>
+
+              <td rowSpan={2} colSpan={3}
+                onClick={() => clearAll()}  
+                className={`text-center border-[1px] border-dotted border-gray-400
+                  cursor-pointer hover:bg-slate-600 duration-150`}>
+                <div>CLEAR ALL</div>
+              </td>
+            </tr>
+            <tr className='text-white bg-slate-800 uppercase select-none'>
+              <td className='text-center border-[1px] border-dotted border-gray-400 text-xs'>
+                {counts.stealth >= 2 ? "HIDDEN" : "NOT HIDDEN"}
+              </td>
+              <td className='text-center border-[1px] border-dotted border-gray-400'>
+                ---
+              </td>
+              <td className='text-center border-[1px] border-dotted border-gray-400 text-xs'>
+                {counts.stage_speed < 2 ? "2%" : `${counts.stage_speed}%`}
+              </td>
+              <td className='text-center border-[1px] border-dotted border-gray-400 text-xs'>
+                {counts.transmission > 10 ? 'AIRBORNE' : counts.transmission > 6 ? 'SKIN CONTACT' : counts.transmission > 2 ? 'FLUID' : 'BLOOD'}
+              </td>
+
+            </tr>
+          </tfoot> */}
         </table>
+        <div
+        onClick={hideShow} 
+        className='
+        text-white text-xs font-bold text-center bg-slate-600 pt-1 pb-2 cursor-pointer select-none
+        hover:bg-slate-400 duration-150
+        '>
+          HIDE/SHOW
+        </div>
       </div>
   )
 }

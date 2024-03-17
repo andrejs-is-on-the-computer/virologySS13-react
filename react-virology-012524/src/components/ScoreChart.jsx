@@ -17,27 +17,28 @@ import {
 } from 'recharts';
 
 
-const ScoreChart = ({rows}) => {
-
+const ScoreChart = ({ rows, counts, thresholds }) => {
+  // console.log('counts', counts);
+  // console.log('rows', rows);
   const data = [
     {
       stat: "Stealth",
-      value: stealth_s,
+      value: counts.stealth,
       // fill: stealth_s > -1 ? "#27ae60" : "#900C3F",
     },
     {
       stat: "Resistance",
-      value: resistance_s,
+      value: counts.resistance,
       // fill: resistance_s > -1 ? "#27ae60" : "#900C3F",
     },
     {
       stat: "Stage Speed",
-      value: stage_speed_s,
+      value: counts.stage_speed,
       // fill: stage_speed_s > -1 ? "#27ae60" : "#900C3F",
     },
     {
       stat: "Transmission",
-      value: transmission_s,
+      value: counts.transmission,
       // fill: transmission_s > -1 ? "#27ae60" : "#900C3F",
     },
   ];
