@@ -158,7 +158,9 @@ const SelectedSymptoms = ({ rows, counts, sendDataToParent }) => {
         text-white text-xs font-bold text-center bg-slate-600 pt-1 pb-2 cursor-pointer select-none
         hover:bg-slate-400 duration-150
         '>
-          HIDE/SHOW
+          <span className=''>
+            HIDE/SHOW
+          </span>
         </div>
       </div>
   )

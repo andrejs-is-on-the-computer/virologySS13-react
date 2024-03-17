@@ -85,6 +85,7 @@ const AllSymptoms = ({ rows, sendDataToParent }) => {
     });
     setRows([...temp]);
     sendDataToParent([...temp]);
+    
   }
 
   return (
@@ -99,14 +100,14 @@ const AllSymptoms = ({ rows, sendDataToParent }) => {
           </div> 
         : '' }
       </div>
-      <div className='controls'>
+      {/* <div className='controls'>
         <input 
           type="text"
           placeholder='Filter items'
           onChange={filter}
         />
-      </div>
-      <table className='w-full mb-[60px] table-fixed'>
+      </div> */}
+      <table className='w-full table-fixed'>
         <thead>
           <tr className='text-white bg-slate-800 uppercase select-none sticky top-[53.6px]'>
             {Object.keys(rows[0]).slice(2).map((entry, index) => (
@@ -148,6 +149,9 @@ const AllSymptoms = ({ rows, sendDataToParent }) => {
             </tr>
           ))}
         </tbody>
+        <tfoot>
+            <tr className='h-4 bg-slate-800'><td colSpan={9}></td></tr>
+        </tfoot>
       </table>
       {!sortedRows.length && (
         <h1 className='text-4xl text-center'>No results... Try expanding the search</h1>
